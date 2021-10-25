@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<!-- /WEB-INF/decorators.xml -->
+<decorators defaultdir="/layout"> <!-- layout 폴더 지정 -->
+
+	<decorator name="main" page="layout.jsp">
+		<pattern>/*/*.do</pattern>
+	</decorator>
+
+	<excludes></excludes>
+</decorators>
