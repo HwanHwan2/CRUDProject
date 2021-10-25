@@ -37,4 +37,4 @@ Spring을 이용하여 기본적인(CRUD) 웹사이트 만들기.
 
 ===================================================   
 DB와 연동이 잘 됐는지 확인을 위해 유저 정보(id, pw) 가져오기 성공
-![ex_screenshot](.img/capture1.png)
+![ex_screenshot](CRUDProject/img/capture1.png)
