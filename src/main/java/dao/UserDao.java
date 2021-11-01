@@ -24,4 +24,22 @@ public class UserDao {
 		param.clear();
 		return template.getMapper(UserMapper.class).userlist();
 	}
+	
+	//==============================유저 회원가입==================================
+	public void entry(User user) {
+		param.clear();
+		param.put("id", user.getId());
+		param.put("pw", user.getPw());
+		param.put("name", user.getName());
+		param.put("nickname", user.getNickname());
+		param.put("birth", user.getBirth());
+		param.put("email", user.getEmail());
+		template.getMapper(UserMapper.class).entry(param);
+	}
+	
+	public User selectOne(String id) {
+		param.clear();
+		param.put("id", id);
+		return template.getMapper(UserMapper.class).selectOne(param);
+	}
 }

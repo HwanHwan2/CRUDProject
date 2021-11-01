@@ -1,5 +1,7 @@
 package config;
 
+import java.util.Properties;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -30,15 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		vr.setSuffix(".jsp");
 		return vr;
 	}
-	/*
-	// 유효성 검증 메세지 파일 경로 설정.
-	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-		ms.setBasename("messages");
-		return ms;
-	}
-
+	
 	@Bean // 예외처리
 	public SimpleMappingExceptionResolver exceptionHandler() {
 		SimpleMappingExceptionResolver ser = new SimpleMappingExceptionResolver();
@@ -48,6 +43,16 @@ public class MvcConfig implements WebMvcConfigurer {
 		ser.setExceptionMappings(pr);
 		return ser;
 	}
+	/*
+	// 유효성 검증 메세지 파일 경로 설정.
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+		ms.setBasename("messages");
+		return ms;
+	}
+
+	
 
 	@Bean
 	public MultipartResolver multipartResolver() { // 파일 업로드 기능 처리

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file = "/WEB-INF/setting.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,10 @@
 <title>로그인</title>
 </head>
 <body>
-	<table>
-		<tr><th>아이디</th><th><input type = "text" id = "id"></th></tr>
-		<tr><th>비밀번호</th><th><input type = "password" id = "password"></th></tr>
-	</table>
+	<form:form modelAttribute = "user" method = "post" name = "login" action = "login.do">
+		<form:input path = "id" name = "id"/>
+		<form:input path = "pw" name = "pw" type = "password"/>
+		<button type = "submit" class = "btn btn-primary">로그인</button>
+	</form:form>
 </body>
 </html>
