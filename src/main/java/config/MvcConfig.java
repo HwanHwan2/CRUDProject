@@ -2,10 +2,12 @@ package config;
 
 import java.util.Properties;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -43,17 +45,16 @@ public class MvcConfig implements WebMvcConfigurer {
 		ser.setExceptionMappings(pr);
 		return ser;
 	}
-	/*
+
 	// 유효성 검증 메세지 파일 경로 설정.
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-		ms.setBasename("messages");
+		ms.setDefaultEncoding("UTF-8");
+		ms.setBasename("errors");
 		return ms;
 	}
-
-	
-
+	/*
 	@Bean
 	public MultipartResolver multipartResolver() { // 파일 업로드 기능 처리
 		// 요청 정보 중 enctype="multipart/form-data인 경우 동작

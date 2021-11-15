@@ -37,9 +37,24 @@ public class UserDao {
 		template.getMapper(UserMapper.class).entry(param);
 	}
 	
+	//==============================회원가입 아이디, 닉네임 체크===============================
+	public int entryIdCheck(String id) {
+		param.clear();
+		param.put("id", id);
+		return template.getMapper(UserMapper.class).entryIdCheck(param);
+	}
+	public int entryNicknameCheck(String nickname) {
+		param.clear();
+		param.put("nickname", nickname);
+		return template.getMapper(UserMapper.class).entryNicknameCheck(param);
+	}
+	
+	//==============================로그인======================================
 	public User selectOne(String id) {
 		param.clear();
 		param.put("id", id);
 		return template.getMapper(UserMapper.class).selectOne(param);
 	}
+
+	
 }

@@ -21,10 +21,23 @@ public interface UserMapper {
 			 "</script>" })
 	void entry(Map<String, Object> param);
 
+	//==============================회원가입 아이디,닉네임 체크==================================
+	@Select({"<script>",
+			 "select count(*) from user ",
+			 "where id = #{id}",
+			 "</script>"})
+	int entryIdCheck(Map<String, Object> param);
+	@Select({"<script>",
+			 "select count(*) from user ",
+			 "where nickname = #{nickname}",
+			 "</script>"})
+	int entryNicknameCheck(Map<String, Object> param);
 	
+	//==============================로그인==========================================
 	@Select({"<script>",
 			 "select * from user ",
 			 "where id = #{id}",
 			 "</script>"})
 	User selectOne(Map<String, Object> param);
+	
 }

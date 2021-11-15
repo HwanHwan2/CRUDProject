@@ -2,23 +2,28 @@ package dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 public class User {
+	@NotEmpty
 	private String id;
-	private int pw;
+	@NotEmpty
+	private String pw;
 	private String name;
 	private String nickname;
 	private Date birth;
 	private String email;
+	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getPw() {
+	public String getPw() {
 		return pw;
 	}
-	public void setPw(int pw) {
+	public void setPw(String pw) {
 		this.pw = pw;
 	}
 	public String getName() {
