@@ -61,3 +61,16 @@ DB와 연동이 잘 됐는지 확인을 위해 유저 정보(id, pw) 가져오�
       회원가입을 Modal창으로 연결해놔서 BindingResult를 사용하는데 어려움이 있는 것 같다.   
       Modal창으로 회원가입을 꼭 하고 싶은데 계속 파도 안되면 회원가입 페이지를 따로 만들어서 할 수밖에 없을 것 같다....(검증 하는데 많은 시간이 걸릴 예정ㅠ)
 
+## **<2021-11-15>**   
+백신 부작용으로 엄청 고생해서 늦어졌다...    
+
+- Modal창 속 회원가입은 BindingResult를 사용하기엔 어렵다고 생각되서 javscript로 일일이 검증작업을 했다. 보안은 좀 취약할듯..?   
+      ㄴ 에러사항(공백, 아이디와 닉네임 중복(ajax로 검증))   
+
+- 드디어 BindingResult 사용법을 익혀서 로그인 쪽 View에 BindingResult를 사용해 유효성 검증을 하도록 했다. 하나 배웠다!
+      ㄴ 에러사항(아이디와 비밀번호 공백, 아이디 비밀번호 틀림 or 없음)   
+
+- User 비밀번호 암호화 과정 완료. javax.crypto.Cipher 이용. 이론은 너무 어려워서 흐름만 알고 패스. 나중에 공부해보기로
+![1](https://user-images.githubusercontent.com/82797084/141738503-afb6e525-d020-4bb0-bd13-b06eefaec5aa.PNG)
+![2](https://user-images.githubusercontent.com/82797084/141738511-85251716-e98d-4c97-b730-73a7a11fe48e.PNG)
+
