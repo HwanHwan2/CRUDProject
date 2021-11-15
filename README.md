@@ -67,7 +67,7 @@ DB와 연동이 잘 됐는지 확인을 위해 유저 정보(id, pw) 가져오�
 - Modal창 속 회원가입은 BindingResult를 사용하기엔 어렵다고 생각되서 javscript로 일일이 검증작업을 했다. 보안은 좀 취약할듯..?   
       ㄴ 에러사항(공백, 아이디와 닉네임 중복(ajax로 검증))   
 
-- 드디어 BindingResult 사용법을 익혀서 로그인 쪽 View에 BindingResult를 사용해 유효성 검증을 하도록 했다. 하나 배웠다!
+- 드디어 BindingResult 사용법을 익혀서 로그인 쪽 View에 BindingResult를 사용해 유효성 검증을 하도록 했다. 하나 배웠다!   
       ㄴ 에러사항(아이디와 비밀번호 공백, 아이디 비밀번호 틀림 or 없음)   
 
 - User 비밀번호 암호화 과정 완료. javax.crypto.Cipher 이용. 이론은 너무 어려워서 흐름만 알고 패스. 나중에 공부해보기로
