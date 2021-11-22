@@ -75,8 +75,8 @@
 			
 			<button type = "submit" class = "btn btn-primary" style = "width:85%">로그인</button>
 		</form:form>
-		<a data-toggle = "modal" href = "#idsearchModal">아이디찾기</a> | 
-		<a data-toggle = "modal" href = "#pwsearchModal">비밀번호찾기</a> | 
+		<a href = "idsearch.do">아이디찾기</a> | 
+		<a href = "pwsearch.do">비밀번호찾기</a> | 
 		<a data-toggle = "modal" href = "#entryModal">회원가입</a>
 	</div>
 	

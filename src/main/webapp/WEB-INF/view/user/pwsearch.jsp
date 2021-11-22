@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <style>
 	.search_form{
 		margin-left:600px;
@@ -16,17 +18,12 @@
 	.search_header{
 		text-align:center;
 	}
-	.name_form{
+	.id_form, .name_form, .email_form{
   		border-bottom:2px solid #adadad;
   		margin:30px;
   		padding:10px 10px;
 	}
-	.birth_form{
-  		border-bottom:2px solid #adadad;
-  		margin:30px;
-  		padding:10px 10px;
-	}
-	.name {
+	.id, .name, .email{
   		width:100%;
   		border:none;
   		outline:none;
@@ -35,30 +32,17 @@
   		height:25px;
   		background-color:#f1f1f1;
 	}
-	.birth{
-		width:100%;
-  		border:none;
-  		outline:none;
-  		color: #636e72;
-  		font-size:16px;
-  		height:25px;
-  		background-color:#f1f1f1;
-	}
 </style>
-<meta charset="UTF-8">
-<title>아이디/비밀번호 찾기</title>
 </head>
-
-
 <body>
 	<div class = "search_form">
 		<div class = "search_header">
 			<h3>
-				<font style = "font-size:35px;">아</font>이디 찾기
+				<font style = "font-size:35px;">비</font>밀번호 찾기
 			</h3>
 		</div>
 		
-		<form:form modelAttribute = "user" method = "post" action = "idsearch.do">
+		<form:form modelAttribute = "user" method = "post" action = "pwsearch.do">
 			<spring:hasBindErrors name = "user">
 				<font color = "red">
 					<c:forEach items = "${errors.globalErrors}" var = "error">
@@ -66,15 +50,18 @@
 					</c:forEach>
 				</font>
 			</spring:hasBindErrors>
+			<div class = "id_form">
+				<form:input path = "id" class = "id" placeholder = "아이디"/><br>
+			</div>
 			<div class = "name_form">
 				<form:input path = "name" class = "name" placeholder = "이름"/><br>
 			</div>
-			<div class = "birth_form">
-				<form:input path = "birth" class = "birth" type = "date"/> 
+			<div class = "email_form">
+				<form:input path = "email" class = "email" placeholder = "aaa@bbb.com"/> 
 			</div>
 			
-			<button type = "submit" class = "btn btn-success" style = "width:42%">아이디찾기</button>
-			<button class = "btn btn-primary" style = "width:42%" onclick = "location.herf = 'pwsearch.do'">비밀번호찾기</button>
+			<button type = "submit" class = "btn btn-success" style = "width:42%">비밀번호찾기</button>
+			<button class = "btn btn-primary" style = "width:42%" onclick = "location.herf = 'login.do'">돌아가기</button>
 		</form:form>
 		
 		

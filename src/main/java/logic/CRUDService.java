@@ -18,4 +18,6 @@ public class CRUDService {
 	public List<User> userlist(){
 		return userDao.userlist();
 	}
+
+
 }

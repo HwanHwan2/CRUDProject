@@ -1,5 +1,8 @@
 package logic;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,21 @@ public class UserService {
 	//========================로그인===========================
 	public User selectOne(String id) {
 		return userDao.selectOne(id);
+	}
+	
+	//====================== ID 찾기 =========================
+	public User getId(String name, Date birth) {
+		return userDao.getId(name,birth);
+	}
+	
+	//====================== PW 찾기 =========================
+	public User getPw(String id, String name, String email) {
+		return userDao.getPw(id,name,email);
+	}
+
+	//====================== PW 변경 =========================
+	public void pwChange(User user) {
+		userDao.pwChange(user);
 	}
 
 	

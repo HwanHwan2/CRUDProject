@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,31 @@ public class UserDao {
 		param.clear();
 		param.put("id", id);
 		return template.getMapper(UserMapper.class).selectOne(param);
+	}
+	
+	//============================ ID 찾기 ================================
+	public User getId(String name, Date birth) {
+		param.clear();
+		param.put("name", name);
+		param.put("birth", birth);
+		return template.getMapper(UserMapper.class).getId(param);
+	}
+
+	//=========================== PW 찾기 ================================
+	public User getPw(String id, String name, String email) {
+		param.clear();
+		param.put("id", id);
+		param.put("name", name);
+		param.put("email", email);
+		return template.getMapper(UserMapper.class).getPw(param);
+	}
+
+	//========================= PW 변경 =================================
+	public void pwChange(User user) {
+		param.clear();
+		param.put("id", user.getId());
+		param.put("pw", user.getPw());
+		template.getMapper(UserMapper.class).pwChange(param);
 	}
 
 	

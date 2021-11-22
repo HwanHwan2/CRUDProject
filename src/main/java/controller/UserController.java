@@ -51,7 +51,6 @@ public class UserController {
 		
 		try {
 			user.setPw(cipherUtil.makehash(user.getPw()).substring(0, 20));
-			System.out.println(user.getPw());
 			userService.entry(user);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -94,25 +93,25 @@ public class UserController {
 		
 		//아이디 비밀번호 입력 안한 경우
 		if(user.getId().equals("") || user.getPw().equals("")) {
-			result.reject("error.login.input");
+			result.reject("login.input");
 			return mav;
 		}
 		//로그인
 		try {
 			User dbUser = userService.selectOne(user.getId());
 			user.setPw(cipherUtil.makehash(user.getPw()).substring(0, 20)); //비밀번호 암호화
-			
+
 			if(dbUser.getPw().equals(user.getPw())) {
 				session.setAttribute("login", dbUser);
 				mav.setViewName("redirect:/user/test.do");
 				return mav;
 			} else { //아이디 비밀번호 틀린 경우
 				System.out.println("아이디 비밀번호 틀림.");
-				result.reject("error.login.pw");
+				result.reject("login.pw");
 				return mav;
 			}
 		} catch(Exception e) {
-			result.reject("error.login.id");
+			result.reject("login.id");
 			return mav;
 		}
 	}
@@ -126,10 +125,85 @@ public class UserController {
 		return mav;
 	}
 	
-	//===================== ID PW 찾기 ================================
-	@GetMapping("/idsearch")
+	//===================== ID 찾기 ================================
+	@RequestMapping(value = "idsearch.do", method = RequestMethod.GET)
 	public ModelAndView idsearch(@ModelAttribute("user") User user) {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
+	
+	@RequestMapping(value = "idsearch.do", method = RequestMethod.POST)
+	public ModelAndView idsearch(@ModelAttribute("user") User user, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		if(user.getName().equals("") || user.getBirth() == null) { //Date 타입은 == null로
+			result.reject("search.id.input");
+			return mav;
+		}
+		
+		User dbUser = userService.getId(user.getName(),user.getBirth());
+		
+		if(dbUser == null) {
+			result.reject("search.id.IncorrectNameBirth");
+			return mav;
+		} else {
+			mav.addObject("id", dbUser.getId());
+			mav.setViewName("user/idresult");
+			return mav;
+		}
+	}
+	
+	@GetMapping("/idresult")
+	public ModelAndView idresult() {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	
+	//======================== PW 찾기 ===============================
+	@RequestMapping(value = "/pwsearch", method = RequestMethod.GET)
+	public ModelAndView pwsearch(@ModelAttribute("user") User user) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	@RequestMapping(value = "/pwsearch", method = RequestMethod.POST)
+	public ModelAndView pwsearch(@ModelAttribute("user") User user, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		if(user.getId().equals("") || user.getName().equals("") || user.getEmail().equals("")) {
+			result.reject("search.pw.input");
+			return mav;
+		}
+		
+		User dbUser = userService.getPw(user.getId(),user.getName(), user.getEmail());
+		
+		if(dbUser == null) { //일치하지 않는 경우
+			result.reject("search.pw.IncorrectIdNameEmail");
+			return mav;
+		} else { //일치하는 경우
+			mav.addObject("id",dbUser.getId()); //히든값으로 아이디 넘겨줌.
+			mav.setViewName("user/pwchange");
+			return mav;
+		}
+	}
+	
+	@RequestMapping(value = "/pwchange", method = RequestMethod.GET)
+	public ModelAndView pwchange(@ModelAttribute("user") User user) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	
+	@RequestMapping(value = "/pwchange", method = RequestMethod.POST)
+	public ModelAndView pwchange(@ModelAttribute("user") User user, BindingResult result) throws NoSuchAlgorithmException {
+		ModelAndView mav = new ModelAndView();
+		if(user.getPw().equals("")) {
+			result.reject("change.pw.input");
+			return mav;
+		}
+		user.setPw(cipherUtil.makehash(user.getPw()).substring(0, 20)); //비밀번호 암호화
+		userService.pwChange(user);
+		
+		mav.setViewName("alert");
+		mav.addObject("url", "login.do");
+		mav.addObject("msg", "비밀번호 변경에 성공했습니다.");
+		return mav;
+	}
+	
 }
