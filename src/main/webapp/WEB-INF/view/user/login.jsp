@@ -37,7 +37,7 @@
   		color:#636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
+  		background-color:white;
 	}
 	.pw{
 		width:100%;
@@ -46,7 +46,13 @@
   		color: #636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
+  		background-color:#white;
+	}
+	input[type=password] {
+		font-family:'Malgun gothic', dotum, sans-serif;
+	}
+	::placeholder{
+		font-family: 'OTWelcomeRA';
 	}
 
 </style>
@@ -70,7 +76,7 @@
 				<form:input path = "id" class = "id" placeholder = "ID"/><br>
 			</div>
 			<div class = "pw_form">
-				<form:input path = "pw" class = "pw" type = "password" value = "" placeholder = "PW"/> 
+				<form:input path = "pw" class = "pw" type = "password" placeholder = "PW"/> 
 			</div>
 			
 			<button type = "submit" class = "btn btn-primary" style = "width:85%">로그인</button>

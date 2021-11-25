@@ -11,13 +11,16 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import aop.LoginInterceptor;
+
 @Configuration
-@ComponentScan(basePackages = { "controller","logic", "dao", "dto"}) //, "logic", "dao", "dto" 
+@ComponentScan(basePackages = { "controller","logic", "dao", "dto", "aop"}) //, "logic", "dao", "dto" 
 @EnableAspectJAutoProxy // AOP 설정
 @EnableWebMvc // 유효성 검증
 public class MvcConfig implements WebMvcConfigurer {
@@ -36,11 +39,12 @@ public class MvcConfig implements WebMvcConfigurer {
 		return vr;
 	}
 	
+
 	@Bean // 예외처리
 	public SimpleMappingExceptionResolver exceptionHandler() {
 		SimpleMappingExceptionResolver ser = new SimpleMappingExceptionResolver();
 		Properties pr = new Properties();
-		pr.put("exception.LoginException", "exception");
+		pr.put("exception.LoginException", "user/login");
 		pr.put("exception.BoardException", "exception");
 		ser.setExceptionMappings(pr);
 		return ser;
@@ -53,6 +57,14 @@ public class MvcConfig implements WebMvcConfigurer {
 		ms.setDefaultEncoding("UTF-8");
 		ms.setBasename("errors");
 		return ms;
+	}
+	
+	// 로그인 처리 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor());
+//		.addPathPatterns("/board/write.do"); //추가할 url 패턴
+//		.excludePathPatterns("*");   --> 제외한 url 패턴
 	}
 	/*
 	@Bean

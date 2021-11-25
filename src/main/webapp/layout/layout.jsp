@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/setting.jsp"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
@@ -11,30 +12,37 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-html, body, h1, h2, h3, h4, h5 {
-	font-family: "Raleway", sans-serif
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
+html, body, h1, h2, h3, h4, h5 {
+	font-family: 'OTWelcomeRA';
+}
+
 </style>
 <head>
 	<decorator:head/>
 </head>
-<body class="w3-light-grey">
+<body class="w3-light-white">
 
 	<!-- Top container -->
 	<div class="w3-bar w3-top w3-black w3-large" style="z-index: 4">
 		<c:choose>
 			<c:when test = "${login eq null}">
-				<a href = "login.do"><span class="w3-bar-item w3-right">Login</span></a>
+				<a href = "${path}/user/login.do"><span class="w3-bar-item w3-right">Login</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href = "logout.do"><span class = "w3-bar-item w3-right">Logout</span></a>
+				<a href = "${path}/user/logout.do"><span class = "w3-bar-item w3-right">Logout</span></a>
 				<span class = "w3-bar-item w3-right">${login.nickname},&nbsp;Welcome!</span>
 			</c:otherwise>
 		</c:choose>
 	</div>
 
 	<!-- Sidebar/menu -->
-	<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index: 3; width: 300px;" id="mySidebar">
+	<nav class="w3-sidebar w3-collapse w3-white w3-animate-left w3-light-grey" style="z-index: 3; width: 300px;" id="mySidebar">
 		<br>
 		<!-- sidebar/login -->
 		<hr>
@@ -43,13 +51,11 @@ html, body, h1, h2, h3, h4, h5 {
 			<h5>Dashboard</h5>
 		</div>
 		<div class="w3-bar-block">
-			<a href="#"
-				class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
-				onclick="w3_close()" title="close menu"><i
-				class="fa fa-remove fa-fw"></i>  Close Menu</a> <a href="#"
-				class="w3-bar-item w3-button w3-padding w3-blue"><i
-				class="fa fa-users fa-fw"></i>  Overview</a> <a href="#"
-				class="w3-bar-item w3-button w3-padding"><i
+			<a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu">
+			<i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+			<a href="${path}/board/list.do" class="w3-bar-item w3-button w3-padding w3-blue">
+				<i class="fa fa-users fa-fw"></i>게시판</a>
+				<a href="#" class="w3-bar-item w3-button w3-padding"><i
 				class="fa fa-eye fa-fw"></i>  Views</a> <a href="#"
 				class="w3-bar-item w3-button w3-padding"><i
 				class="fa fa-users fa-fw"></i>  Traffic</a> <a href="#"
