@@ -29,7 +29,7 @@
 	.ck-editor__editable {
 		font-size:17px;
 	    min-height: 500px;
-	}
+	}dksg
 </style>
 </head>
 <body>	
@@ -68,6 +68,7 @@
 		.catch(error =>{
 			console.error(error);
 		});
+	
 </script>
 </body>
 </html>

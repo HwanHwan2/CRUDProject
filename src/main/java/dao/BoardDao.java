@@ -19,8 +19,16 @@ public class BoardDao {
 	private Map<String, Object> param = new HashMap<>();
 	
 	//==================== 게시물 리스트 ===========================
-	public List<Board> boardList() {
-		return template.getMapper(BoardMapper.class).boardList();
+	public List<Board> boardList(Integer pageNum, int limit, String searchtype, String searchcontent) {
+		param.clear();
+		if (searchtype != null && searchcontent != null) { // 검색 요청
+			param.put("searchtype", searchtype);
+			param.put("searchcontent", searchcontent);
+		}
+		param.put("startrow", (pageNum - 1) * limit);
+		param.put("pageNum",pageNum);
+		param.put("limit", limit);
+		return template.getMapper(BoardMapper.class).boardList(param);
 	}
 
 	//==================== 게시물 상세보기 ========================
@@ -46,6 +54,14 @@ public class BoardDao {
 	//==================== 게시글 번호 가져오기 =====================
 	public int getNo() {
 		return template.getMapper(BoardMapper.class).getNo();
+	}
+
+	//==================== 게시물 수 ==========================
+	public int listcount(String searchtype, String searchcontent) {
+		param.clear();
+		param.put("searchcontent", searchcontent);
+		param.put("searchtype", searchtype);
+		return template.getMapper(BoardMapper.class).listcount(param);
 	}
 	
 	

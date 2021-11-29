@@ -26,14 +26,40 @@ public class BoardController {
 	
 	
 	//===================== 게시물 리스트 ===========================
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView boardList() {
-		ModelAndView mav = new ModelAndView();
-		List<Board> list = boardService.boardList();
-		mav.addObject("list",list);
-		mav.addObject("today", new SimpleDateFormat("yyyyMMdd").format(new Date())); //시간 계산 
-		return mav;
-	}
+	@RequestMapping("list")
+	   public ModelAndView list(Integer pageNum, String searchtype, String searchcontent) {
+	      ModelAndView mav = new ModelAndView();
+	      if(pageNum == null || pageNum.toString().equals("")) {
+	         pageNum=1;
+	      }
+	      if(searchtype == null || searchcontent == null || searchtype.trim().equals("") || searchcontent.trim().equals("")) {
+	         searchtype = null;
+	         searchcontent = null;
+	      }
+	      int limit = 10;   //한 페이지에 보여질 게시물의 건수
+	      //검색 조건에 맞도록 등록된 게시물 건수
+	      int listcount = boardService.listcount(searchtype,searchcontent); //등록 게시물
+	      //boardlist : 화면에 출력할 게시물 목록 (최대 10건)
+	      List<Board> list = boardService.boardList(pageNum,limit,searchtype,searchcontent);
+	      
+	      //최대 필요한페이지 수
+	      int maxpage = (int)((double)listcount/limit + 0.95);
+	      //화면에 표시 할 페이지의 시작 번호
+	      int startpage = (int)((pageNum/10.0 + 0.9) - 1) * 10 + 1;
+	      int endpage = startpage + 9;
+	      if(endpage > maxpage)
+	         endpage = maxpage;
+	      int boardno = listcount - (pageNum - 1) * limit +1;   //화면에 표시될 게시물 번호. 의미 없음x   
+	      mav.addObject("pageNum",pageNum);
+	      mav.addObject("boardno",boardno);
+	      mav.addObject("maxpage",maxpage);
+	      mav.addObject("startpage",startpage);
+	      mav.addObject("endpage",endpage);
+	      mav.addObject("listcount",listcount);
+	      mav.addObject("list",list);
+	      mav.addObject("today", new SimpleDateFormat("yyyyMMdd").format(new Date()));
+	      return mav;
+	   }
 	
 	//==================== 게시물 작성 ==============================
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -71,7 +97,7 @@ public class BoardController {
 	
 	//======================= 게시물 상세보기 =========================
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public ModelAndView info(int no, int type) {
+	public ModelAndView info(int no, int type, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Board info = boardService.info(no,type);
 		mav.addObject("info", info);

@@ -10,11 +10,23 @@
 	.list_form{
 		margin-left:200px;
 		margin-right:200px;
-		height:700px;
 		position:relative;
 		top:100px;
 	}
+	.pageSearch{
+		margin-top:150px;
+	}
+	#search{
+		margin-left:33%;
+		z-index:30;
+	}
 </style>
+<script>
+   function listdo(page){
+      document.searchform.pageNum.value=page;
+      document.searchform.submit();
+   }
+</script>
 </head>
 <body>
 <body>
@@ -50,7 +62,44 @@
 		</table>
 		
 	</div>
-
-
+	
+	<div class = "pageSearch">
+		<ul class="pagination justify-content-center" style="margin-left:40%;">
+          <li><a href="javascript:listdo(${startpage})"><<</a></li>
+        <c:if test="${pageNum <=1}">
+           <li><a href="javascript:listdo(${pageNum+1})"><</a></li>
+        </c:if>
+        <c:if test="${pageNum > 1}">
+           <li><a href="javascript:listdo(${pageNum})"><</a></li>
+         </c:if>
+      
+        <c:forEach var="a" begin="${startpage}" end="${endpage}">
+            <li><a href="javascript:listdo(${a})">${a}</a></li>
+         </c:forEach>
+           
+        <c:if test="${pageNum >= maxpage}">   
+           <li><a href="javascript:listdo(${pageNum+1})">></a></li>
+        </c:if>
+        <c:if test="${pageNum < maxpage}">
+            <li><a href="javascript:listdo(${pageNum+2})">></a></li>
+        </c:if>
+        <li><a href="javascript:listdo(${endpage+1})">>></a></li>
+    	</ul><hr style="margin-top: 5px;margin-bottom: 15px">
+	</div>
+	
+	<form action="list.do" method="post" name="searchform" class="form-inline" id = "search">
+      	<select class="form-control" name="searchtype" style="width:100px;">
+      		<option value="">선택</option>
+      		<option value="title">제목</option>
+      		<option value="nickname">닉네임</option>
+      		<option value="content">글내용</option>
+      	</select>
+      	<script>
+         	searchform.searchtype.value="${param.searchtype}";
+      	</script>
+       	<input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="searchcontent" value="${param.searchcontent}" style="width:300px; height:50px">
+       	<input type="submit" class="btn btn-info" value="검색">
+   	</form>
+   	
 </body>
 </html>

@@ -14,8 +14,8 @@ public class BoardService {
 	private BoardDao boardDao;
 
 	//============ 게시물 리스트 ===============
-	public List<Board> boardList() {
-		return boardDao.boardList();
+	public List<Board> boardList(Integer pageNum, int limit, String searchtype, String searchcontent) {
+		return boardDao.boardList(pageNum,limit, searchtype, searchcontent);
 	}
 
 	//============ 게시물 상세보기 =============
@@ -31,6 +31,11 @@ public class BoardService {
 	//============ 게시글 번호 가져오기 ===========
 	public int getNo() {
 		return boardDao.getNo();
+	}
+
+	//=========== 게시물 수 ===================
+	public int listcount(String searchtype, String searchcontent) {
+		return boardDao.listcount(searchtype,searchcontent);
 	}
 	
 }

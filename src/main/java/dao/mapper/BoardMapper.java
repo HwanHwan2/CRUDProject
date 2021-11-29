@@ -11,13 +11,19 @@ import dto.Board;
 public interface BoardMapper {
 
 	@Select({"<script>",
-			 "select * from board",
-			 "</script>"})
-	List<Board> boardList();
+		 	 "select * from board ",
+		 	 "<if test='searchtype != null and searchcontent != null'> ",
+		 		"where ${searchtype} like '%${searchcontent}%'",
+		 	 "</if>",
+		 	 "<if test='limit != null'>",
+		 	 	"order by no desc limit #{startrow}, #{limit}",
+		 	 "</if>", 
+		 	 "</script>" })
+	List<Board> boardList(Map<String, Object> param);
 
 	@Select({"<script>",
 			 "select * from board ",
-			 "where no = #{no} and type = #{type}",
+			 "where no = #{no} and type = #{type} ",
 			 "</script>"})
 	Board info(Map<String, Object> param);
 
@@ -31,4 +37,12 @@ public interface BoardMapper {
 			 "values (#{no},#{title},#{nickname},#{content},NOW(),0,#{files},#{type})",
 			 "</script>"})
 	void write(Map<String, Object> param);
+
+	@Select({ "<script>",
+			  "select count(*) from board ",
+			  "<if test='searchtype != null and searchcontent != null'> ",
+			  		"where ${searchtype} like '%${searchcontent}%' ",
+			  "</if>",
+			  "</script>" })
+	int listcount(Map<String, Object> param);
 }
