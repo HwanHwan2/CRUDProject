@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dao.BoardDao;
 import dto.Board;
+import dto.Comment;
 
 @Service
 public class BoardService {
@@ -36,6 +37,25 @@ public class BoardService {
 	//=========== 게시물 수 ===================
 	public int listcount(String searchtype, String searchcontent) {
 		return boardDao.listcount(searchtype,searchcontent);
+	}
+	
+	//========== 댓글 가져오기 ==================
+	public List<Comment> comment(int no, int type) {
+		return boardDao.comment(no,type);
+	}
+
+	public int commentCount(int no, int type) {
+		return boardDao.commentCount(no,type);
+	}
+
+	//============ 게시물 삭제 ==================
+	public void delete(int type, int no) {
+		boardDao.delete(type,no);
+	}
+
+	//============ 게시물 수정 ====================
+	public void update(Board board) {		
+		boardDao.update(board);
 	}
 	
 }

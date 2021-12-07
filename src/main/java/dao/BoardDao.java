@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.BoardMapper;
 import dto.Board;
+import dto.Comment;
 
 @Repository
 public class BoardDao {
@@ -62,6 +63,40 @@ public class BoardDao {
 		param.put("searchcontent", searchcontent);
 		param.put("searchtype", searchtype);
 		return template.getMapper(BoardMapper.class).listcount(param);
+	}
+
+	//===================== 댓글 가져오기 =======================
+	public List<Comment> comment(int no, int type) {
+		param.clear();
+		param.put("no", no);
+		param.put("type", type);
+		return template.getMapper(BoardMapper.class).comment(param);
+	}
+
+	public int commentCount(int no, int type) {
+		param.clear();
+		param.put("no", no);
+		param.put("type", type);
+		return template.getMapper(BoardMapper.class).commentCount(param);
+	}
+
+	//================== 게시물 삭제 =================================
+	public void delete(int type, int no) {
+		param.clear();
+		param.put("type", type);
+		param.put("no", no);
+		template.getMapper(BoardMapper.class).delete(param);
+	}
+
+	//================= 게시물 수정 ============================
+	public void update(Board board) {
+		param.clear();
+		param.put("no", board.getNo());
+		param.put("type", board.getType());
+		param.put("title", board.getTitle());
+		param.put("content", board.getContent());
+		param.put("files", board.getFiles());
+		template.getMapper(BoardMapper.class).update(param);
 	}
 	
 	

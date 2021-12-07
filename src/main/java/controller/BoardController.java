@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Board;
+import dto.Comment;
 import logic.BoardService;
 
 @Controller
@@ -97,10 +101,53 @@ public class BoardController {
 	
 	//======================= 게시물 상세보기 =========================
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public ModelAndView info(int no, int type, HttpSession session) {
+	public ModelAndView info(@ModelAttribute("board") Board board,int no, int type, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Board info = boardService.info(no,type);
+		List<Comment> comment = boardService.comment(no,type);
+		int commentCount = boardService.commentCount(no,type);
 		mav.addObject("info", info);
+		mav.addObject("comment",comment);
+		mav.addObject("commentCount",commentCount);
+		return mav;
+	}
+	
+	//===================== 게시물 삭제 ===============================
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute("board") Board board, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		boardService.delete(board.getType(),board.getNo());
+		mav.setViewName("alert");
+		mav.addObject("url","list.do");
+		mav.addObject("msg","게시물을 삭제했습니다.");
+		return mav;
+	}
+	//===================== 게시물 수정 ===============================
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public ModelAndView update(@ModelAttribute("board") Board board) {
+		ModelAndView mav = new ModelAndView();
+		Board info = boardService.info(board.getNo(), board.getType()); //전 게시물 다시 가져오기.
+		mav.addObject("info",info);
+		return mav;
+	}
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update2(@ModelAttribute("board") Board board) {
+		ModelAndView mav = new ModelAndView();
+	
+		try {
+			boardService.update(board);
+			mav.setViewName("alert");
+			mav.addObject("url","info.do?type=" + board.getType() + "&no=" + board.getNo());
+			mav.addObject("msg","수정에 성공했습니다.");
+			return mav;
+		} catch (Exception e) {
+			Board info = boardService.info(board.getNo(), board.getType()); //전 게시물 다시 가져오기.
+			mav.setViewName("alert");
+			mav.addObject("url","update.do?type=" + board.getType() + "&no=" + board.getNo());
+			mav.addObject("msg","수정에 실패했습니다." + e);
+			mav.addObject("info",info);
+		}
 		return mav;
 	}
 }

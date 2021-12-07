@@ -33,6 +33,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private CipherUtil cipherUtil;
+	private HttpSession session1;
 	
 	@GetMapping("/test")
 	public ModelAndView test(@ModelAttribute("user") User user) {
@@ -83,6 +84,7 @@ public class UserController {
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(@ModelAttribute("user") User user) {
 		ModelAndView mav = new ModelAndView();
+
 		return mav;
 	}
 	

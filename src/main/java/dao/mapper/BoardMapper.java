@@ -3,10 +3,13 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Board;
+import dto.Comment;
 
 public interface BoardMapper {
 
@@ -45,4 +48,30 @@ public interface BoardMapper {
 			  "</if>",
 			  "</script>" })
 	int listcount(Map<String, Object> param);
+
+	@Select({"<script>",
+			 "select * from comment ",
+			 "where no = #{no} and type = #{type} ",
+			 "order by c_date desc",
+			 "</script>"})
+	List<Comment> comment(Map<String, Object> param);
+
+	@Select({"<script>",
+			 "select count(*) from comment ",
+			 "where no = #{no} and type = #{type} ",
+			 "</script>"})
+	int commentCount(Map<String, Object> param);
+
+	@Delete({"<script>",
+			 "delete from board ",
+			 "where type = #{type} and no = #{no}",
+			 "</script>"})
+	void delete(Map<String, Object> param);
+
+	@Update({"<script>",
+			 "update board set ",
+			 "title = #{title}, content = #{content}, files = #{files} ",
+			 "where type = #{type} and no = #{no}",
+			 "</script>"})
+	void update(Map<String, Object> param);
 }

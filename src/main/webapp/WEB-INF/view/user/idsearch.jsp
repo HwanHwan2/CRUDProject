@@ -74,7 +74,7 @@
 			</div>
 	
 			<button type = "submit" class = "btn btn-success" style = "width:42%">아이디찾기</button>
-			<button class = "btn btn-primary" style = "width:42%" onclick = "location.href = 'pwsearch.do'">비밀번호찾기</button>
+			<button type = "button" class = "btn btn-primary" style = "width:42%" onclick = "location.href = 'pwsearch.do'">비밀번호찾기</button>
 		</form:form>
 		
 		

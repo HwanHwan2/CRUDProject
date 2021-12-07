@@ -3,8 +3,11 @@ package dto;
 import java.util.Date;
 
 public class Comment {
+
 	private int no;
-	private String id;
+	private int type;
+	private String nickname;
+	private String content;
 	private Date c_date;
 	public int getNo() {
 		return no;
@@ -12,11 +15,24 @@ public class Comment {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getId() {
-		return id;
+	
+	public int getType() {
+		return type;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Date getC_date() {
 		return c_date;
@@ -26,6 +42,10 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "Comment [no=" + no + ", id=" + id + ", c_date=" + c_date + "]";
+		return "Comment [no=" + no + ", type=" + type + ", nickname=" + nickname + ", content=" + content + ", c_date="
+				+ c_date + "]";
 	}
-}	
+	
+	
+	
+}
