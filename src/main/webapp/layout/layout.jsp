@@ -83,13 +83,13 @@ html, body, h1, h2, h3, h4, h5 {
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main" style="margin-left: 300px; margin-top: 43px; height:auto;">
 		<decorator:body/>
-		
-		<!-- Footer 
-		<footer class="w3-container w3-padding-16 w3-light-grey">
+	</div>
+
+	<!-- FOOTER
+	<div class="w3-container w3-padding-16 w3-light-grey">
 			<h4>FOOTER</h4>
 			<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-		</footer> -->
-	</div>
+	</div> -->
 
 		
 

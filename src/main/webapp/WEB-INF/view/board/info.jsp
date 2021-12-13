@@ -48,7 +48,24 @@
 		height:500px;
 	}
 	#input_comment{
-		width:
+		height:120px;
+	}
+	.comment_form{
+		padding:10px 10px 50px 10px;
+		height:auto;
+	}
+	.comment_content{
+		width:100%;
+		height:auto;
+		border-top : 1px solid #eee;
+		padding:15px;
+	}
+	#comment_submit{
+		width:9%;
+		height:120px;
+		float:right;
+		position:relative;
+		bottom:120px;
 	}
 </style>
 </head>
@@ -95,23 +112,111 @@
 	</div>
 		
 	<span class = "comment_count"><b>댓글 ${commentCount}</b></span>
+	
 	<div class = "comment_form">
-		<textarea class = "form-control" id = "input_comment" placeholder = "내용을 입력해주세요."></textarea>
+		<div class = "input_comment">
+			<span class = "input1">
+				<form:form modelAttribute = "comment" action = "commentWrite.do" method = "post" name = "comment">
+					<label id = "errorInput"></label>
+					<input type = "hidden" name = "no" value = "${info.no}">
+					<input type = "hidden" name = "type" value = "${info.type}">
+					<input type = "hidden" name = "nickname" value = "${sessionScope.login.nickname}">
+					<textarea class="form-control" name="content" id = "input_comment"placeholder="내용을 입력해주세요." style = "resize:none; width:90%;"></textarea>
+					<button type = "submit" class = "btn btn-success" id = "comment_submit" onclick = "return commentCheck();">등록</button>
+				</form:form>
+			</span>
+		</div>
+		
 		<c:forEach var = "comment" items = "${comment}">
-			<div class = "comment_content">
-				작성자 : ${comment.nickname}
-				내용 : ${comment.content}
+			<c:set var = "c_no" value = "${comment.c_no }"/> <!-- ajax에 사용될 commentNo -->
+			<div class = "comment_content" id = "comment${c_no}">
+				<div class = "commentInfo">
+					<span class = "commentNickname" style = "font-size:18px;">
+						<b>${comment.nickname}</b>
+					</span>
+				</div>
+				
+				<div class = "commentContent" style = "font-size:18px;">
+					${comment.content}
+				</div>
+				<div class = "commentDate">
+					<span class = "commentDate2">
+						<fmt:formatDate value = "${comment.c_date}" pattern = "yyyy-MM-dd HH:mm"/>
+					</span>
+					<c:if test = "${sessionScope.login.nickname == comment.nickname}">
+						&nbsp;<a href = "#" onclick = "commentDelete(${c_no});"><u>삭제</u></a>
+						&nbsp;<a href = "#" onclick = "commentUpdate();"><u>수정</u></a>
+					</c:if>
+				</div>
+				
 			</div>
 		</c:forEach>
 	</div>
 	
 	<script>
+		function commentCount(){
+			var infoType = ${info.type};
+			var infoNo = ${info.no};
+			var comment = {
+					type : infoType,
+					no : infoNo
+			};
+			$.ajax({
+				url:'${path}/board/commentCount.do?type='+infoType+"&no="+infoNo,
+				type:'get',
+				success : function(data) {
+					$('.comment_count').html("<b>댓글 " + data + "</b>");
+				}, error : function(){
+					alert("댓글 수 불러오기 실패");
+				}
+			});
+		}
 		function deleteCheck(){
 			if(confirm("삭제하시겠습니까?")){
 				return true;
 			} else{
 				return false;
 			}
+		}
+		function commentDelete(c_no){
+			if(confirm("삭제하시겠습니까?")){
+				var infoType = ${info.type};
+				var infoNo = ${info.no};
+				var c_no = c_no;
+				var comment = {
+						type : infoType,
+						no : infoNo,
+						c_no : c_no
+				};
+				$.ajax({
+					url : '${path}/board/commentDelete.do',
+					type : "post",
+					dataType : "json",
+					data : JSON.stringify(comment),
+					contentType : 'application/json; charset = UTF-8',
+					success : function(data) {
+						if(data == 1) {
+							commentCount();
+							const div = document.getElementById('comment'+c_no); <!-- 댓글 실시간 삭제 -->
+							div.remove();
+						} else {
+							alert("삭제 실패");
+						}
+					}, error : function(){
+						alert("알 수 없는 오류");
+					}
+				});
+			} else {
+				
+			}
+		}
+		function commentCheck(){
+			var content = comment.input_comment.value;
+
+			if(content == "") {
+				$("#errorInput").html("<font color = 'red'>내용을 입력해주세요.</font>");
+				return false;
+			} else return true;
 		}
 	</script>
 </body>

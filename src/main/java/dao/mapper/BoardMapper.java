@@ -74,4 +74,22 @@ public interface BoardMapper {
 			 "where type = #{type} and no = #{no}",
 			 "</script>"})
 	void update(Map<String, Object> param);
+
+	@Delete({"<script>",
+			 "delete from comment ",
+			 "where type = #{type} and no = #{no} and c_no = #{c_no}",
+			 "</script>"})
+	int commentDelete(Map<String, Object> param);
+
+	@Select({"<script>",
+			 "select Max(c_no) from comment ",
+			 "where type = #{type} and no = #{no}",
+			 "</script>"})
+	int commentMaxNo(Map<String, Object> param);
+
+	@Insert({"<script>",
+			 "insert into comment ",
+			 "values (#{no},#{c_no},#{type},#{nickname},#{content},NOW())",
+			 "</script>"})
+	void commentWrite(Map<String, Object> param);
 }

@@ -88,8 +88,8 @@
 	</div>
 	
 	<form action="list.do" method="post" name="searchform" class="form-inline" id = "search">
-      	<select class="form-control" name="searchtype" style="width:100px;">
-      		<option value="">선택</option>
+      	<select class="form-control" aria-label = "Default select example" name="searchtype" style="width:100px; font-family:emoji;">
+      		<option value = "">선택</option>
       		<option value="title">제목</option>
       		<option value="nickname">닉네임</option>
       		<option value="content">글내용</option>
@@ -97,7 +97,7 @@
       	<script>
          	searchform.searchtype.value="${param.searchtype}";
       	</script>
-       	<input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="searchcontent" value="${param.searchcontent}" style="width:300px; height:50px">
+       	<input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="searchcontent" value="${param.searchcontent}" style="width:300px; font-size:13px; font-family:emoji;">
        	<input type="submit" class="btn btn-info" value="검색">
    	</form>
    	

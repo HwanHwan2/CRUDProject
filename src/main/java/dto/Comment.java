@@ -6,6 +6,7 @@ public class Comment {
 
 	private int no;
 	private int type;
+	private int c_no;
 	private String nickname;
 	private String content;
 	private Date c_date;
@@ -15,12 +16,17 @@ public class Comment {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	
 	public int getType() {
 		return type;
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	public int getC_no() {
+		return c_no;
+	}
+	public void setC_no(int c_no) {
+		this.c_no = c_no;
 	}
 	public String getNickname() {
 		return nickname;
@@ -42,10 +48,10 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "Comment [no=" + no + ", type=" + type + ", nickname=" + nickname + ", content=" + content + ", c_date="
-				+ c_date + "]";
+		return "Comment [no=" + no + ", type=" + type + ", c_no=" + c_no + ", nickname=" + nickname + ", content="
+				+ content + ", c_date=" + c_date + "]";
 	}
-	
+		
 	
 	
 }

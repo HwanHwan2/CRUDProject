@@ -3,14 +3,18 @@ package controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,13 +105,13 @@ public class BoardController {
 	
 	//======================= 게시물 상세보기 =========================
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public ModelAndView info(@ModelAttribute("board") Board board,int no, int type, HttpSession session) {
+	public ModelAndView info(@ModelAttribute("board") Board board, int no, int type, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Board info = boardService.info(no,type);
-		List<Comment> comment = boardService.comment(no,type);
+		List<Comment> comment1 = boardService.comment(no,type);
 		int commentCount = boardService.commentCount(no,type);
 		mav.addObject("info", info);
-		mav.addObject("comment",comment);
+		mav.addObject("comment",comment1);
 		mav.addObject("commentCount",commentCount);
 		return mav;
 	}
@@ -149,5 +153,47 @@ public class BoardController {
 			mav.addObject("info",info);
 		}
 		return mav;
+	}
+	//================= 댓글 카운트 ==========================
+	@GetMapping(value = "/commentCount")
+	@ResponseBody
+	public int commentCount(@RequestParam("type") int type, @RequestParam("no") int no) {
+		return boardService.commentCount(no, type);
+	}
+	//================= 댓글 작성 ============================
+	@PostMapping("/commentWrite")
+	public ModelAndView commentWrite(Comment comment) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			
+			//댓글이 없는 경우
+			if(comment.getC_no() == 0) {
+				comment.setC_no(1);
+			} else {
+				int commentMaxNo = boardService.commentMaxNo(comment);
+				commentMaxNo++;
+				comment.setC_no(commentMaxNo);
+			}
+			
+			boardService.commentWrite(comment);
+			mav.setViewName("alert");
+			mav.addObject("msg","등록 성공");
+			mav.addObject("url","info.do?type="+comment.getType()+"&no="+comment.getNo());
+			return mav;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mav.setViewName("alert");
+			mav.addObject("msg","등록 실패");
+			mav.addObject("url","info.do?type="+comment.getType()+"&no="+comment.getNo());
+			return mav;
+		}
+		
+	}
+	//================= 댓글 삭제 ============================
+	//=========== 0 -> 실패   1 -> 성공 ======================
+	@PostMapping(value = "/commentDelete")
+	@ResponseBody
+	public int commentDelete(@RequestBody Comment comment) {
+		return boardService.commentDelete(comment);
 	}
 }

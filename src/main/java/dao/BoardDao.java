@@ -98,6 +98,34 @@ public class BoardDao {
 		param.put("files", board.getFiles());
 		template.getMapper(BoardMapper.class).update(param);
 	}
+
+	//================= 댓글 삭제 =============================
+	public int commentDelete(Comment comment) {
+		param.clear();
+		param.put("type", comment.getType());
+		param.put("no", comment.getNo());
+		param.put("c_no", comment.getC_no());
+		return template.getMapper(BoardMapper.class).commentDelete(param);
+	}
+
+	//=============== 댓글 등록 ===============================
+	public void commentWrite(Comment comment) {
+		param.clear();
+		param.put("type", comment.getType());
+		param.put("no", comment.getNo());
+		param.put("c_no", comment.getC_no());
+		param.put("content", comment.getContent());
+		param.put("nickname", comment.getNickname());
+		template.getMapper(BoardMapper.class).commentWrite(param);
+	}
+	
+	//=============== 댓글 번호 가져오기 ============================
+	public int commentMaxNo(Comment comment) {
+		param.clear();
+		param.put("type", comment.getType());
+		param.put("no", comment.getNo());
+		return template.getMapper(BoardMapper.class).commentMaxNo(param);
+	}
 	
 	
 }

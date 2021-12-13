@@ -57,5 +57,19 @@ public class BoardService {
 	public void update(Board board) {		
 		boardDao.update(board);
 	}
+
+	//============ 댓글 삭제 ====================
+	public int commentDelete(Comment comment) {
+		return boardDao.commentDelete(comment);
+	}
+
+	//=========== 댓글 등록 ====================
+	public void commentWrite(Comment comment) {
+		boardDao.commentWrite(comment);
+	}
+	//=========== 댓글 제일 큰 번호 ==============
+	public int commentMaxNo(Comment comment) {
+		return boardDao.commentMaxNo(comment);
+	}
 	
 }
