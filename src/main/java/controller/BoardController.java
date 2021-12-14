@@ -107,6 +107,7 @@ public class BoardController {
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView info(@ModelAttribute("board") Board board, int no, int type, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		boardService.increaseHits(no,type); // 조회수
 		Board info = boardService.info(no,type);
 		List<Comment> comment1 = boardService.comment(no,type);
 		int commentCount = boardService.commentCount(no,type);
@@ -164,17 +165,17 @@ public class BoardController {
 	@PostMapping("/commentWrite")
 	public ModelAndView commentWrite(Comment comment) {
 		ModelAndView mav = new ModelAndView();
+		
+		int commentCount = boardService.commentCount(comment.getNo(), comment.getType()); //댓글 있는지 없는지
 		try {
-			
 			//댓글이 없는 경우
-			if(comment.getC_no() == 0) {
+			if(commentCount == 0) {
 				comment.setC_no(1);
 			} else {
 				int commentMaxNo = boardService.commentMaxNo(comment);
 				commentMaxNo++;
 				comment.setC_no(commentMaxNo);
 			}
-			
 			boardService.commentWrite(comment);
 			mav.setViewName("alert");
 			mav.addObject("msg","등록 성공");

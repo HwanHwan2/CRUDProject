@@ -51,8 +51,9 @@
 		height:120px;
 	}
 	.comment_form{
-		padding:10px 10px 50px 10px;
+		padding:10px;
 		height:auto;
+		margin-bottom:200px;
 	}
 	.comment_content{
 		width:100%;
@@ -178,15 +179,15 @@
 				return false;
 			}
 		}
-		function commentDelete(c_no){
+		function commentDelete(no){
 			if(confirm("삭제하시겠습니까?")){
 				var infoType = ${info.type};
 				var infoNo = ${info.no};
-				var c_no = c_no;
+				var no = no;
 				var comment = {
 						type : infoType,
 						no : infoNo,
-						c_no : c_no
+						c_no : no
 				};
 				$.ajax({
 					url : '${path}/board/commentDelete.do',
@@ -197,7 +198,7 @@
 					success : function(data) {
 						if(data == 1) {
 							commentCount();
-							const div = document.getElementById('comment'+c_no); <!-- 댓글 실시간 삭제 -->
+							const div = document.getElementById('comment'+no); <!-- 댓글 실시간 삭제 -->
 							div.remove();
 						} else {
 							alert("삭제 실패");

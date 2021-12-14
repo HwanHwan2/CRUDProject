@@ -72,4 +72,14 @@ public class BoardService {
 		return boardDao.commentMaxNo(comment);
 	}
 	
+	//=========== 내 게시물 가져오기 ===============
+	public List<Board> myBoardList(String nickname) {
+		return boardDao.myBoardList(nickname);
+	}
+
+	//=========== 조회수 증가 =====================
+	public void increaseHits(int no, int type) {
+		boardDao.increaseHits(no,type);
+	}
+	
 }

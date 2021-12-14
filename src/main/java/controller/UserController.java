@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dto.Board;
 import dto.User;
-import logic.CRUDService;
+import logic.BoardService;
 import logic.CipherUtil;
 import logic.UserService;
 
@@ -28,18 +29,18 @@ import logic.UserService;
 public class UserController {
 
 	@Autowired
-	private CRUDService service;
-	@Autowired
 	private UserService userService;
 	@Autowired
+	private BoardService boardService;
+	@Autowired
 	private CipherUtil cipherUtil;
-	private HttpSession session1;
 	
-	@GetMapping("/test")
-	public ModelAndView test(@ModelAttribute("user") User user) {
+	@GetMapping("/myinfo")
+	public ModelAndView test(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<User> userlist = service.userlist();
-		mav.addObject("userlist", userlist);
+		User user = (User)session.getAttribute("login");
+		List<Board> myBoardList = boardService.myBoardList(user.getNickname());
+		mav.addObject("myBoardList", myBoardList);
 		return mav;
 	}
 	
@@ -105,7 +106,7 @@ public class UserController {
 
 			if(dbUser.getPw().equals(user.getPw())) {
 				session.setAttribute("login", dbUser);
-				mav.setViewName("redirect:/user/test.do");
+				mav.setViewName("redirect:/user/myinfo.do");
 				return mav;
 			} else { //아이디 비밀번호 틀린 경우
 				System.out.println("아이디 비밀번호 틀림.");

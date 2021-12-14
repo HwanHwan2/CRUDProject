@@ -42,7 +42,7 @@
 			</span>
 		</div>
 		<table class = "table table-hover" id = "main_table">
-			<tr><th style = "width:10%;">번호</th><th style = "width:50%;">제목</th><th style = "width:20%;">작성자</th><th style = "width:20%;">작성일</th></tr>	
+			<tr><th style = "width:10%;">번호</th><th style = "width:50%;">제목</th><th style = "width:10%;">작성자</th><th style = "width:20%;">작성일</th><th>조회수</th></tr>	
 			<c:forEach var = "board" items = "${list}">
 				<tr>
 					<td>${board.no}</td>
@@ -57,6 +57,7 @@
 							<fmt:formatDate value = "${board.b_date}" pattern = "yy-MM-dd" />
 						</c:if>
 					</td>
+					<td>${board.hits}</td>
 				</tr>
 			</c:forEach>
 		</table>

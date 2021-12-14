@@ -92,4 +92,17 @@ public interface BoardMapper {
 			 "values (#{no},#{c_no},#{type},#{nickname},#{content},NOW())",
 			 "</script>"})
 	void commentWrite(Map<String, Object> param);
+
+	@Select({"<script>",
+			 "select * from board ",
+			 "order by b_date desc",
+			 "</script>"})
+	List<Board> myBoardList(Map<String, Object> param);
+
+	@Update({"<script>",
+			 "update board set ",
+			 "hits = hits+1 ",
+			 "where type = #{type} and no = #{no}",
+			 "</script>"})
+	void increaseHits(Map<String, Object> param);
 }

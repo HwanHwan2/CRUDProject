@@ -126,6 +126,21 @@ public class BoardDao {
 		param.put("no", comment.getNo());
 		return template.getMapper(BoardMapper.class).commentMaxNo(param);
 	}
+
+	//=============== 내 게시물 가져오기 =============================
+	public List<Board> myBoardList(String nickname) {
+		param.clear();
+		param.put("nickname", nickname);
+		return template.getMapper(BoardMapper.class).myBoardList(param);
+	}
+
+	//=============== 조회수 증rk ====================
+	public void increaseHits(int no, int type) {
+		param.clear();
+		param.put("no", no);
+		param.put("type", type);
+		template.getMapper(BoardMapper.class).increaseHits(param);
+	}
 	
 	
 }
