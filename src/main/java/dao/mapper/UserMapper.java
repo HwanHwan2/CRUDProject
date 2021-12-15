@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -62,5 +63,20 @@ public interface UserMapper {
 			 "where id = #{id}",
 			 "</script>"})
 	void pwChange(Map<String, Object> param);
+	
+	//===================== 회원탈퇴 비밀번호 검증 ========================
+	@Select({"<script>",
+			 "select count(*) from user ",
+			 "where id = #{id} and pw = #{pw}",
+			 "</script>"})
+	int dropPwCheck(Map<String, Object> param);
+	
+	//=================== 회원 탈퇴 ===========================
+	@Delete({"<script>",
+			 "delete from user ",
+			 "where id = #{id}",
+			 "</script>"})
+	void drop(Map<String, Object> param);
+	
 	
 }

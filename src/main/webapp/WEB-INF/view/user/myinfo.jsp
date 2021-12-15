@@ -24,6 +24,13 @@
 	.info2{
 		margin-bottom:200px;
 	}
+	
+	input[type=password] {
+		font-family:'Malgun gothic', dotum, sans-serif;
+	}
+	::placeholder{
+		font-family: 'OTWelcomeRA';
+	}
 </style>
 </head>
 <body>
@@ -36,25 +43,25 @@
 		<div class = "info1"> <!-- 내 정보 -->
 			<table class = "table">
 				<tr>
-					<td style = "width:20%;height:15%;">아이디</td><td>user1</td>	
+					<td style = "width:20%;height:15%;">아이디</td><td>${sessionScope.login.id}</td>	
 				</tr>
 				<tr>
 					<td>비밀번호</td><td><a href=  "#"><u>비밀번호변경</u></a>
 				</tr>
 				<tr>
-					<td>닉네임</td><td>유저1</td>
+					<td>닉네임</td><td>${sessionScope.login.nickname}</td>
 				</tr>
 				<tr>
-					<td>이름</td><td>유저일</td>
+					<td>이름</td><td>${sessionScope.login.name}</td>
 				</tr>
 				<tr>
-					<td>생년월일</td><td>1991-01-01</td>
+					<td>생년월일</td><td>${sessionScope.login.birth}</td>
 				</tr>
 				<tr>
-					<td>이메일</td><td>user1@naver.com</td>
+					<td>이메일</td><td>${sessionScope.login.email}</td>
 				</tr>
 			</table>
-			<button class = "btn btn-danger">회원탈퇴</button>
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dropModal">회원탈퇴</button>
 		</div>
 		<div class = "info_header2">
 			<span class = "header2" style = "font-size:25px;">
@@ -69,7 +76,7 @@
 				<th style = "width:20%;">작성일</th>
 				<th style = "width:10%;">조회수</th>
 				<th style = "width:10%;">댓글수</th>
-			</tr>	
+			</tr>
 			<c:forEach var = "board" items = "${myBoardList}">
 				<tr>
 					<td>
@@ -92,8 +99,80 @@
 				</tr>
 			</c:forEach>
 			</table>
+			<c:if test = "${empty myBoardList}">
+				<b style = "position:relative; left:42%; font-size:20px;">게시물이 없습니다.</b>
+			</c:if>
 		</div>
 	</div>
+	
+	<!-- 회원탈퇴 Modal -->
+	<div class="modal fade" id="dropModal" role="dialog">
+    	<div class="modal-dialog">
+    
+      	<!-- Modal content-->
+      	<form:form modelAttribute = "user" id = "drop" action = "drop.do" method = "post" name = "drop" onsubmit = "return dropCheck();">
+      	<input type = "hidden" name = "id" value = "${sessionScope.login.id}">
+      	<div class="modal-content">
+        	<div class="modal-header">
+        		<h3>
+					<i class="fa fa-user"></i>
+					<font style="font-size: 35px;">회</font>원가입
+				</h3>
+        	</div>
+        	<div class="modal-body">
+          		<div class = "form-group">
+          			<label for = "id">비밀번호</label><label id = "errorPw">&nbsp;&nbsp;</label>
+          			<input type = "password" class = "form-control" id = "pw" name = "pw" placeholder = "****">
+          		</div>
+          		<div class = "form-group">
+          			<label for = "pw">비밀번호 재입력</label><label id = "errorPw2">&nbsp;&nbsp;</label>
+          			<input type = "password" class = "form-control" name = "pw2" placeholder = "****">
+          		</div>
+          		<div class = "form-group">
+          			<label for = "name">회원탈퇴를 원하실 경우 "회원탈퇴"를 입력해주세요</label><label id = "errorName">&nbsp;&nbsp;</label>
+					<input type = "text" class = "form-control" name = "drop">
+          		</div>
+          		
+        	</div>
+       		<div class="modal-footer">
+       			<input type="submit" class="btn btn-success" id = "entryButton" value = "회원가입">
+          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	</div>
+      	</div>
+      	</form:form>
+    	</div>
+  	</div>
+	
+<script>
+	function dropCheck(){
+		var pw1 = drop.pw.value;
+		var pw2 = drop.pw2.value;
+		var text = drop.drop.value;
+		var id = '${sessionScope.login.id}';
+		
+		if(pw1 == pw2){
+			if(text == "회원탈퇴"){
+				$.ajax({
+					url : '${path}/user/dropPwCheck.do?id='+id+'&pw='+pw1,
+					type : "post",
+					success : function(data){
+						if(data == 1) {
+							return ture;
+						} else {
+							alert("회원 비밀번호가 일치하지 않습니다.");
+						}
+					}, error : function(){
+						alert("ajax 에러 발생");
+					}
+				});
+			} else {
+				alert("회원탈퇴를 정확히 입력해주세요.");
+				return false;
+			}
+		} else {
+			alert("비밀번호가 일치하지 않습니다.");
+		}
+	}
+</script>
 </body>
-
 </html>

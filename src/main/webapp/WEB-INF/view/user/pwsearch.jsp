@@ -30,7 +30,6 @@
   		color:#636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
 	}
 </style>
 </head>
@@ -61,7 +60,7 @@
 			</div>
 			
 			<button type = "submit" class = "btn btn-success" style = "width:42%">비밀번호찾기</button>
-			<button class = "btn btn-primary" style = "width:42%" onclick = "location.herf = 'login.do'">돌아가기</button>
+			<button type = "button" class = "btn btn-primary" style = "width:42%" onclick = "location.href = 'login.do'">돌아가기</button>
 		</form:form>
 		
 		

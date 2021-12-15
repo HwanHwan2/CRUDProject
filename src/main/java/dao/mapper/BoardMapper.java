@@ -95,6 +95,7 @@ public interface BoardMapper {
 
 	@Select({"<script>",
 			 "select * from board ",
+			 "where nickname = #{nickname} ",
 			 "order by b_date desc",
 			 "</script>"})
 	List<Board> myBoardList(Map<String, Object> param);

@@ -48,5 +48,17 @@ public class UserService {
 		userDao.pwChange(user);
 	}
 
+	//===================== 회원 탈퇴 비밀번호 검증 =========================
+	public int dropPwCheck(String id, String pw) {
+		return userDao.dropPwCheck(id,pw);
+	}
+
+	
+	//==================== 회원 탈퇴 ============================
+	public void drop(String id) {
+		userDao.drop(id);
+	}
+
+
 	
 }

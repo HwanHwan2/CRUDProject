@@ -33,7 +33,6 @@
   		color:#636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
 	}
 	.birth{
 		width:100%;
@@ -42,7 +41,6 @@
   		color: #636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
 	}
 </style>
 <meta charset="UTF-8">
@@ -73,8 +71,9 @@
 				<form:input path = "birth" class = "birth" type = "date"/> 
 			</div>
 	
-			<button type = "submit" class = "btn btn-success" style = "width:42%">아이디찾기</button>
-			<button type = "button" class = "btn btn-primary" style = "width:42%" onclick = "location.href = 'pwsearch.do'">비밀번호찾기</button>
+			<button type = "submit" class = "btn btn-success" style = "width:28%">아이디찾기</button>
+			<button type = "button" class = "btn btn-primary" style = "width:28%" onclick = "location.href = 'pwsearch.do'">비밀번호찾기</button>
+			<button type = "button" class = "btn btn-" style = "width:28%" onclick = "location.href = 'login.do'">돌아가기</button>
 		</form:form>
 		
 		

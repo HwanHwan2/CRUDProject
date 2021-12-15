@@ -22,6 +22,7 @@ html, body, h1, h2, h3, h4, h5 {
 	font-family: 'OTWelcomeRA';
 }
 
+
 </style>
 <head>
 	<decorator:head/>
@@ -37,6 +38,7 @@ html, body, h1, h2, h3, h4, h5 {
 			<c:otherwise>
 				<a href = "${path}/user/logout.do"><span class = "w3-bar-item w3-right">Logout</span></a>
 				<span class = "w3-bar-item w3-right">${login.nickname},&nbsp;Welcome!</span>
+				<a href = "${path}/user/myinfo.do"><span class = "w3-bar-item w3-right">내 정보</span></a>
 			</c:otherwise>
 		</c:choose>
 	</div>

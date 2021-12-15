@@ -61,7 +61,7 @@ public class UserController {
 		
 		//회원가입 성공 후 alert, url 처리
 		mav.setViewName("alert");
-		mav.addObject("url", "test.do");
+		mav.addObject("url", "myinfo.do");
 		mav.addObject("msg", "회원가입을 축하합니다.");
 		
 		return mav;
@@ -187,6 +187,7 @@ public class UserController {
 		}
 	}
 	
+	//================== 비밀번호 변경 ===========================
 	@RequestMapping(value = "/pwchange", method = RequestMethod.GET)
 	public ModelAndView pwchange(@ModelAttribute("user") User user) {
 		ModelAndView mav = new ModelAndView();
@@ -209,4 +210,26 @@ public class UserController {
 		return mav;
 	}
 	
+	//================== 회원탈퇴 ==============================
+	@PostMapping("/drop")
+	public ModelAndView drop(String id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		userService.drop(id);
+		session.invalidate();
+		mav.addObject("url","login.do");
+		mav.addObject("msg","회원탈퇴가 정상적으로 처리되었습니다.");
+		mav.setViewName("alert");
+		return mav;
+	}
+	
+	@PostMapping("dropPwCheck")
+	@ResponseBody
+	public int dropPwCheck(@RequestParam("pw") String pw, @RequestParam("id") String id) {
+		try {
+			pw = cipherUtil.makehash(pw).substring(0, 20); //입력받은 pw 암호화 후 DB와 비교하기
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return userService.dropPwCheck(id,pw);
+	}
 }

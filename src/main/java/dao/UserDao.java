@@ -82,5 +82,20 @@ public class UserDao {
 		template.getMapper(UserMapper.class).pwChange(param);
 	}
 
+	//======================= 회원탈퇴 비밀번호 검증 =========================
+	public int dropPwCheck(String id, String pw) {
+		param.clear();
+		param.put("id", id);
+		param.put("pw", pw);
+		return template.getMapper(UserMapper.class).dropPwCheck(param);
+	}
+
+	//======================= 회원 탈퇴 ===========================
+	public void drop(String id) {
+		param.clear();
+		param.put("id", id);
+		template.getMapper(UserMapper.class).drop(param);
+	}
+
 	
 }
