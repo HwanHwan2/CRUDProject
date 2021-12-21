@@ -69,7 +69,7 @@ public interface UserMapper {
 			 "select count(*) from user ",
 			 "where id = #{id} and pw = #{pw}",
 			 "</script>"})
-	int dropPwCheck(Map<String, Object> param);
+	int PwCheck(Map<String, Object> param);
 	
 	//=================== 회원 탈퇴 ===========================
 	@Delete({"<script>",
@@ -77,6 +77,14 @@ public interface UserMapper {
 			 "where id = #{id}",
 			 "</script>"})
 	void drop(Map<String, Object> param);
+	
+	//================== info창 비밀번호 변경 ======================
+	@Update({"<script>",
+			 "update user ",
+			 "set pw = #{pw} ",
+			 "where id = #{id}",
+			 "</script>"})
+	void changePw(Map<String, Object> param);
 	
 	
 }

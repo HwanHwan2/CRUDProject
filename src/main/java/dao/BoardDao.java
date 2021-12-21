@@ -47,7 +47,9 @@ public class BoardDao {
 		param.put("nickname", board.getNickname());
 		param.put("content", board.getContent());
 		param.put("b_date", board.getB_date());
-		param.put("files", board.getFiles());
+		param.put("realFileName", board.getRealFileName());
+		param.put("saveFileName", board.getSaveFileName());
+		param.put("fileSize",board.getFileSize());
 		param.put("type", board.getType());
 		template.getMapper(BoardMapper.class).write(param);
 		
@@ -95,7 +97,9 @@ public class BoardDao {
 		param.put("type", board.getType());
 		param.put("title", board.getTitle());
 		param.put("content", board.getContent());
-		param.put("files", board.getFiles());
+		param.put("realFileName", board.getRealFileName());
+		param.put("saveFileName", board.getSaveFileName());
+		param.put("fileSize",board.getFileSize());
 		template.getMapper(BoardMapper.class).update(param);
 	}
 
@@ -140,6 +144,14 @@ public class BoardDao {
 		param.put("no", no);
 		param.put("type", type);
 		template.getMapper(BoardMapper.class).increaseHits(param);
+	}
+
+	//=============== 다운로드 링크 ===================
+	public List<Board> downloadFileName(int type, int no) {
+		param.clear();
+		param.put("type", type);
+		param.put("no",no);
+		return template.getMapper(BoardMapper.class).downloadFileName(param);
 	}
 	
 	

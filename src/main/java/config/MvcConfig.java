@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -66,7 +68,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //		.addPathPatterns("/board/write.do"); //추가할 url 패턴
 //		.excludePathPatterns("*");   --> 제외한 url 패턴
 	}
-	/*
+
 	@Bean
 	public MultipartResolver multipartResolver() { // 파일 업로드 기능 처리
 		// 요청 정보 중 enctype="multipart/form-data인 경우 동작
@@ -74,6 +76,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		mr.setMaxInMemorySize(10485760); // 메모리 저장 최대 바이트 수
 		mr.setMaxUploadSize(104857600); // 최대 업로드 가능 바이트 수
 		return mr;
-	} */
+	}
 
 }

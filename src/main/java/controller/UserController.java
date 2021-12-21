@@ -1,6 +1,8 @@
 package controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,11 +38,13 @@ public class UserController {
 	private CipherUtil cipherUtil;
 	
 	@GetMapping("/myinfo")
-	public ModelAndView test(HttpSession session) {
+	public ModelAndView myinfo(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		
 		User user = (User)session.getAttribute("login");
 		List<Board> myBoardList = boardService.myBoardList(user.getNickname());
 		mav.addObject("myBoardList", myBoardList);
+		mav.addObject("today", new SimpleDateFormat("yyyyMMdd").format(new Date()));
 		return mav;
 	}
 	
@@ -61,7 +65,7 @@ public class UserController {
 		
 		//회원가입 성공 후 alert, url 처리
 		mav.setViewName("alert");
-		mav.addObject("url", "myinfo.do");
+		mav.addObject("url", "login.do");
 		mav.addObject("msg", "회원가입을 축하합니다.");
 		
 		return mav;
@@ -109,7 +113,6 @@ public class UserController {
 				mav.setViewName("redirect:/user/myinfo.do");
 				return mav;
 			} else { //아이디 비밀번호 틀린 경우
-				System.out.println("아이디 비밀번호 틀림.");
 				result.reject("login.pw");
 				return mav;
 			}
@@ -222,14 +225,32 @@ public class UserController {
 		return mav;
 	}
 	
-	@PostMapping("dropPwCheck")
+	@PostMapping("PwCheck")
 	@ResponseBody
-	public int dropPwCheck(@RequestParam("pw") String pw, @RequestParam("id") String id) {
+	public int PwCheck(@RequestParam("pw") String pw, @RequestParam("id") String id) {
 		try {
 			pw = cipherUtil.makehash(pw).substring(0, 20); //입력받은 pw 암호화 후 DB와 비교하기
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		return userService.dropPwCheck(id,pw);
+		return userService.PwCheck(id,pw);
+	}
+	
+	//================= info창 비밀번호 변경 ========================
+	@PostMapping("/changePw")
+	public ModelAndView changePw(String id, String newPw1,HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		try {
+			newPw1 = cipherUtil.makehash(newPw1).substring(0,20);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		userService.changePw(id,newPw1);
+		
+		session.invalidate();
+		mav.addObject("url","login.do");
+		mav.addObject("msg","비밀번호를 변경했습니다. 다시 로그인 해주세요.");
+		mav.setViewName("alert");
+		return mav;
 	}
 }

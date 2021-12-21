@@ -1,15 +1,20 @@
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Board;
@@ -32,10 +38,12 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	//파일 저장 경로
+	private String PATH = "C:\\Users\\wlghk\\CRUD\\files";
 	
 	//===================== 게시물 리스트 ===========================
 	@RequestMapping("list")
-	   public ModelAndView list(Integer pageNum, String searchtype, String searchcontent) {
+	public ModelAndView list(Integer pageNum, String searchtype, String searchcontent) {
 	      ModelAndView mav = new ModelAndView();
 	      if(pageNum == null || pageNum.toString().equals("")) {
 	         pageNum=1;
@@ -73,14 +81,32 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public ModelAndView write(@ModelAttribute("board") Board board, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
 		return mav;
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public ModelAndView write(@ModelAttribute("board") Board board, BindingResult result, HttpSession session) {
+	public ModelAndView write(@ModelAttribute("board") Board board, BindingResult result, 
+			HttpSession session, @RequestParam("files") MultipartFile files) throws IllegalStateException, IOException {
 		ModelAndView mav = new ModelAndView();
-		if(board.getTitle().equals("") || board.getContent().equals("")) {
+
+		//files.getOriginalName : 파일 이름+확장자명
+		if(!files.getOriginalFilename().isEmpty()) { //등록한 파일이 있으면
+			File dir = new File(PATH); //폴더 없으면 생성
+	        if (!dir.isDirectory()) {
+	            dir.mkdirs();
+	        }
+	        String uuid = UUID.randomUUID().toString(); //파일 중복을 위한 UUID 생성
+	        String realFileName = files.getOriginalFilename();
+	        String saveFileName = uuid + "." + realFileName;
+	        long fileSize = files.getSize();
+	        board.setRealFileName(realFileName);
+	        board.setSaveFileName(saveFileName);
+	        board.setFileSize(fileSize);
+			files.transferTo(new File(PATH,saveFileName));
+		}
+		
+		
+		if(board.getTitle().equals("") || board.getContent().equals("")) {	
 			result.reject("board.write");
 			return mav;
 		}
@@ -115,6 +141,36 @@ public class BoardController {
 		mav.addObject("comment",comment1);
 		mav.addObject("commentCount",commentCount);
 		return mav;
+	}
+	
+	//====================== 파일 다운로드 ===========================
+	@RequestMapping("/download")
+	@ResponseBody
+	public void download(HttpServletResponse response, @RequestParam("type") int type, @RequestParam("no") int no) throws IOException {
+		List<Board> files = boardService.downloadFileName(type,no);
+		
+		String realFileName = new String(files.get(0).getRealFileName().getBytes("UTF-8"), "ISO-8859-1"); //한글 파일은 깨지기 때문에 인코딩
+		String saveFileName = files.get(0).getSaveFileName();
+		long fileSize = files.get(0).getFileSize();
+		
+		File file = new File(PATH + "\\" + saveFileName);
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + realFileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        response.setHeader("Content-Type", "application/octer-stream");
+        response.setHeader("Content-Length", "" + fileSize);
+        response.setHeader("Pragma", "no-cache;");
+        response.setHeader("Expires", "-1;");
+        
+        FileInputStream fis = new FileInputStream(file);
+        ServletOutputStream sos = response.getOutputStream();
+        byte b [] = new byte[4096];
+        int data = 0;
+        while((data=(fis.read(b, 0, b.length))) != -1){    
+            sos.write(b, 0, data);        
+        }
+        sos.flush();
+        sos.close();
+        fis.close();
 	}
 	
 	//===================== 게시물 삭제 ===============================

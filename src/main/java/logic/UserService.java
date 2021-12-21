@@ -49,14 +49,19 @@ public class UserService {
 	}
 
 	//===================== 회원 탈퇴 비밀번호 검증 =========================
-	public int dropPwCheck(String id, String pw) {
-		return userDao.dropPwCheck(id,pw);
+	public int PwCheck(String id, String pw) {
+		return userDao.PwCheck(id,pw);
 	}
 
 	
 	//==================== 회원 탈퇴 ============================
 	public void drop(String id) {
 		userDao.drop(id);
+	}
+
+	//================== info창 비밀번호 변경 ====================
+	public void changePw(String id, String newPw1) {
+		userDao.changePw(id, newPw1);
 	}
 
 

@@ -34,7 +34,7 @@
 </head>
 <body>	
 	<div class = "write_form">
-		<form:form modelAttribute = "board" action = "write.do" method = "post">
+		<form:form modelAttribute = "board" action = "write.do" method = "post" enctype = "multipart/form-data">
 			<form:hidden path = "nickname" value = "${sessionScope.login.nickname}"/>
 			<form:hidden path = "type" value = "1"/>
 			<div class = "write_header">
@@ -58,6 +58,7 @@
 			<div class = "content_form">
 				<form:textarea path="content" class = "form-control" id = "input_content" placeholder = "내용을 입력해주세요." row="15" cols="80"/>
 			</div>
+			첨부파일 <input type = "file" name = "files">
 		</form:form>
 	</div>
 	

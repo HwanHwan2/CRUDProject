@@ -46,7 +46,7 @@
 					<td style = "width:20%;height:15%;">아이디</td><td>${sessionScope.login.id}</td>	
 				</tr>
 				<tr>
-					<td>비밀번호</td><td><a href=  "#"><u>비밀번호변경</u></a>
+					<td>비밀번호</td><td><a data-toggle = "modal" href = "#changePwModal"><u>비밀번호변경</u></a>
 				</tr>
 				<tr>
 					<td>닉네임</td><td>${sessionScope.login.nickname}</td>
@@ -116,7 +116,7 @@
         	<div class="modal-header">
         		<h3>
 					<i class="fa fa-user"></i>
-					<font style="font-size: 35px;">회</font>원가입
+					<font style="font-size: 35px;">회</font>원탈퇴
 				</h3>
         	</div>
         	<div class="modal-body">
@@ -142,6 +142,43 @@
       	</form:form>
     	</div>
   	</div>
+  	
+  	<!-- 회원탈퇴 Modal -->
+	<div class="modal fade" id="changePwModal" role="dialog">
+    	<div class="modal-dialog">
+    
+      	<!-- Modal content-->
+      	<form:form modelAttribute = "user" id = "changePw" action = "changePw.do" method = "post" name = "changePw" onsubmit = "return changePwCheck();">
+      	<input type = "hidden" name = "id" value = "${sessionScope.login.id}">
+      	<div class="modal-content">
+        	<div class="modal-header">
+        		<h3>
+					<i class="fa fa-user"></i>
+					<font style="font-size: 35px;">비</font>밀번호변경
+				</h3>
+        	</div>
+        	<div class="modal-body">
+          		<div class = "form-group">
+          			<label for = "oldPw">현재 비밀번호</label><label id = "pw1">&nbsp;&nbsp;</label>
+          			<input type = "password" class = "form-control" id = "oldPw" name = "oldPw" placeholder = "현재 비밀번호">
+          		</div>
+          		<div class = "form-group">
+          			<label for = "newPw1">새 비밀번호</label><label id = "newPw1">&nbsp;&nbsp;</label>
+          			<input type = "password" class = "form-control" name = "newPw1" placeholder = "새 비밀번호">
+          		</div>
+          		<div class = "form-group">
+          			<label for = "newPw2">새 비밀번호 재입력</label><label id = "newPw2">&nbsp;&nbsp;</label>
+          			<input type = "password" class = "form-control" name = "newPw2" placeholder = "새 비밀번호 재입력">
+          		</div>		
+        	</div>
+       		<div class="modal-footer">
+       			<input type="submit" class="btn btn-success" id = "changPwButton" value = "변경하기">
+          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	</div>
+      	</div>
+      	</form:form>
+    	</div>
+  	</div>
 	
 <script>
 	function dropCheck(){
@@ -153,13 +190,14 @@
 		if(pw1 == pw2){
 			if(text == "회원탈퇴"){
 				$.ajax({
-					url : '${path}/user/dropPwCheck.do?id='+id+'&pw='+pw1,
+					url : '${path}/user/PwCheck.do?id='+id+'&pw='+pw1,
 					type : "post",
 					success : function(data){
 						if(data == 1) {
 							return ture;
-						} else {
+						} else{
 							alert("회원 비밀번호가 일치하지 않습니다.");
+							return false;
 						}
 					}, error : function(){
 						alert("ajax 에러 발생");
@@ -172,6 +210,39 @@
 		} else {
 			alert("비밀번호가 일치하지 않습니다.");
 		}
+	}
+	
+	function changePwCheck(){
+		var oldPw = changePw.oldPw.value;
+		var newPw1 = changePw.newPw1.value;
+		var newPw2 = changePw.newPw2.value;
+		var id = "${sessionScope.login.id}";
+		let resultFlag = false;
+		
+		if(confirm("변경하시겠습니까?")){
+			if(newPw1 == newPw2) {
+				$.ajax({
+					url : '${path}/user/PwCheck.do?id='+id+'&pw='+oldPw,
+					type : 'post',
+					async : false,
+					success : function(data){
+						alert(data);
+						if(data == 1) {
+							resultFlag = true;
+						} else if(data == 0){
+							alert("비밀번호가 일치하지 않습니다.");
+							resultFlag = false;
+						}
+					}, error : function(){alert("ajax 에러");}
+				});
+			} else {
+				alert("사용하실 비밀번호를 정확히 입력해주세요.");
+				resultFlag = false;
+			}
+		} else {
+			resultFlag = false;
+		}
+		return resultFlag;
 	}
 </script>
 </body>

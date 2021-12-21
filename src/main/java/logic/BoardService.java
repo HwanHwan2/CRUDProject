@@ -81,5 +81,10 @@ public class BoardService {
 	public void increaseHits(int no, int type) {
 		boardDao.increaseHits(no,type);
 	}
+
+	//============ 다운로드 파일 링크 ==============
+	public List<Board> downloadFileName(int type, int no) {
+		return boardDao.downloadFileName(type,no);
+	}
 	
 }

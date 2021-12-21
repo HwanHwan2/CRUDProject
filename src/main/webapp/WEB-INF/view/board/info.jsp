@@ -110,8 +110,14 @@
 				${info.content}
 			</div>
 		</div>
+		<form action = "download" method = "get">
+			<input type = "hidden" name = "type" value = "${info.type}">
+			<input type = "hidden" name = "no" value = "${info.no}">
+			<button type = "submit" class = "btn btn-primary">다운로드</button> 
+		</form>
+		<a href = "download.do?type=${info.type}&no=${info.no}">${info.realFileName}</a>
 	</div>
-		
+	
 	<span class = "comment_count"><b>댓글 ${commentCount}</b></span>
 	
 	<div class = "comment_form">

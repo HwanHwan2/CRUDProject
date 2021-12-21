@@ -37,7 +37,7 @@ public interface BoardMapper {
 
 	@Insert({"<script>",
 			 "insert into board ",
-			 "values (#{no},#{title},#{nickname},#{content},NOW(),0,#{files},#{type})",
+			 "values (#{no}, #{title}, #{nickname}, #{content}, NOW(), 0, #{type}, #{realFileName}, #{saveFileName}, #{fileSize})",
 			 "</script>"})
 	void write(Map<String, Object> param);
 
@@ -70,7 +70,7 @@ public interface BoardMapper {
 
 	@Update({"<script>",
 			 "update board set ",
-			 "title = #{title}, content = #{content}, files = #{files} ",
+			 "title = #{title}, content = #{content}, realFileName = #{realFileName}, saveFileName = #{saveFileName}, fileSize = #{fileSize} ",
 			 "where type = #{type} and no = #{no}",
 			 "</script>"})
 	void update(Map<String, Object> param);
@@ -89,7 +89,7 @@ public interface BoardMapper {
 
 	@Insert({"<script>",
 			 "insert into comment ",
-			 "values (#{no},#{c_no},#{type},#{nickname},#{content},NOW())",
+			 "values (#{no}, #{c_no}, #{type}, #{nickname}, #{content}, NOW())",
 			 "</script>"})
 	void commentWrite(Map<String, Object> param);
 
@@ -106,4 +106,10 @@ public interface BoardMapper {
 			 "where type = #{type} and no = #{no}",
 			 "</script>"})
 	void increaseHits(Map<String, Object> param);
+
+	@Select({"<script>",
+			 "select realFileName, saveFileName, fileSize from board ",
+			 "where type = #{type} and no = #{no}",
+			 "</script>"})	
+	List<Board> downloadFileName(Map<String, Object> param);
 }
