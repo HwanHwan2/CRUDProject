@@ -64,9 +64,10 @@ public class MvcConfig implements WebMvcConfigurer {
 	// 로그인 처리 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginInterceptor());
-//		.addPathPatterns("/board/write.do"); //추가할 url 패턴
-//		.excludePathPatterns("*");   --> 제외한 url 패턴
+		registry.addInterceptor(new LoginInterceptor())
+		.addPathPatterns("/board/write.do","/board/update.do")
+		.addPathPatterns("/user/myinfo.do")//추가할 url 패턴
+		.excludePathPatterns("*");
 	}
 
 	@Bean

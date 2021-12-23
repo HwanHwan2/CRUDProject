@@ -15,6 +15,7 @@ public class Board {
 	private String saveFileName;
 	private long fileSize;
 	private int type;
+	private int commentCnt;
 	public int getNo() {
 		return no;
 	}
@@ -75,12 +76,16 @@ public class Board {
 	public void setType(int type) {
 		this.type = type;
 	}
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
 	@Override
 	public String toString() {
 		return "Board [no=" + no + ", nickname=" + nickname + ", title=" + title + ", content=" + content + ", b_date="
 				+ b_date + ", hits=" + hits + ", realFileName=" + realFileName + ", saveFileName=" + saveFileName
-				+ ", fileSize=" + fileSize + ", type=" + type + "]";
+				+ ", fileSize=" + fileSize + ", type=" + type + "commentCnt =" + commentCnt + "]";
 	}
-	
-	
 }

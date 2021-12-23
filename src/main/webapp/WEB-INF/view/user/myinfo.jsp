@@ -84,7 +84,10 @@
 							자유게시판
 						</c:if>
 					</td>
-					<td><a href = "${path}/board/info.do?type=${board.type}&no=${board.no}">${board.title}</a></td>
+					<td><a href = "${path}/board/info.do?type=${board.type}&no=${board.no}">${board.title}</a>
+						<c:if test = "${board.realFileName != null}">
+							<span class="glyphicon glyphicon-paperclip" aria-hidden="true" style = "width:15px; height:15px;"></span>
+						</c:if></td>
 					<td>
 						<fmt:formatDate value = "${board.b_date}" pattern = "yyyyMMdd" var = "date"/>
 						<c:if test = "${today == date}">
@@ -95,7 +98,7 @@
 						</c:if>
 					</td>
 					<td>${board.hits}</td>
-					<td>${board.nickname}</td>
+					<td>${board.commentCnt}</td>
 				</tr>
 			</c:forEach>
 			</table>

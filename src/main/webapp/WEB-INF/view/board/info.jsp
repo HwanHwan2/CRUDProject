@@ -103,19 +103,13 @@
 						</form:form>
 					</c:if>
 			</div>
-			
 		</div>
 		<div class = "info_content">
-			<div class = "info_content">
 				${info.content}
+			<div class = "content_files">
+				<font style = "font-size:15px;">첨부파일 [<a href = "download.do?type=${info.type}&no=${info.no}">${info.realFileName}</a>]</font>
 			</div>
 		</div>
-		<form action = "download" method = "get">
-			<input type = "hidden" name = "type" value = "${info.type}">
-			<input type = "hidden" name = "no" value = "${info.no}">
-			<button type = "submit" class = "btn btn-primary">다운로드</button> 
-		</form>
-		<a href = "download.do?type=${info.type}&no=${info.no}">${info.realFileName}</a>
 	</div>
 	
 	<span class = "comment_count"><b>댓글 ${commentCount}</b></span>
@@ -128,8 +122,15 @@
 					<input type = "hidden" name = "no" value = "${info.no}">
 					<input type = "hidden" name = "type" value = "${info.type}">
 					<input type = "hidden" name = "nickname" value = "${sessionScope.login.nickname}">
-					<textarea class="form-control" name="content" id = "input_comment"placeholder="내용을 입력해주세요." style = "resize:none; width:90%;"></textarea>
-					<button type = "submit" class = "btn btn-success" id = "comment_submit" onclick = "return commentCheck();">등록</button>
+					<c:choose>
+					<c:when test = "${not empty sessionScope.login}">
+						<textarea class="form-control" name="content" id = "input_comment" placeholder="내용을 입력해주세요." style = "resize:none; width:90%;"></textarea>
+						<button type = "submit" class = "btn btn-success" id = "comment_submit" onclick = "return commentCheck();">등록</button>
+					</c:when>
+					<c:otherwise>
+						<textarea class="form-control" name="content" id = "input_comment" placeholder="로그인 후 댓글 작성 가능합니다." style = "resize:none; width:100%;" readonly></textarea>
+					</c:otherwise>
+					</c:choose>
 				</form:form>
 			</span>
 		</div>

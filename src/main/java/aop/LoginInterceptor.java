@@ -30,15 +30,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	}
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-/*		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("login");
 		
+		//로그인 안한 경우
 		if(ObjectUtils.isEmpty(user)) {
-			response.sendRedirect("login.do");
+			response.sendRedirect("localhost:8080/CRUD/user/login.do");
 			return false;
 		} else {
 			return true;
-		}  */
-		return true;
+		}  
+
 	}
 }

@@ -46,7 +46,15 @@
 			<c:forEach var = "board" items = "${list}">
 				<tr>
 					<td>${board.no}</td>
-					<td><a href = "info.do?type=1&no=${board.no}">${board.title}</a></td>
+					<td>
+						<a href = "info.do?type=1&no=${board.no}">${board.title}</a>
+						<c:if test = "${board.commentCnt != 0}">
+							<b>(${board.commentCnt})</b> 
+						</c:if>
+						<c:if test = "${board.realFileName != null}">
+							<span class="glyphicon glyphicon-paperclip" aria-hidden="true" style = "width:15px; height:15px;"></span>
+						</c:if>
+					</td>
 					<td>${board.nickname}</td>
 					<td>
 						<fmt:formatDate value = "${board.b_date}" pattern = "yyyyMMdd" var = "date"/>

@@ -14,7 +14,9 @@ import dto.Comment;
 public interface BoardMapper {
 
 	@Select({"<script>",
-		 	 "select * from board ",
+		 	 "select b.no, b.title, b.nickname, b.content, b.b_date, b.hits, b.type, b.realFileName, b.saveFileName, fileSize, ",
+		 	 "	(select count(*) from comment c where b.no = c.no and b.type = c.type) as commentCnt ",
+			 "from board b",
 		 	 "<if test='searchtype != null and searchcontent != null'> ",
 		 		"where ${searchtype} like '%${searchcontent}%'",
 		 	 "</if>",
@@ -94,7 +96,9 @@ public interface BoardMapper {
 	void commentWrite(Map<String, Object> param);
 
 	@Select({"<script>",
-			 "select * from board ",
+			 "select b.no, b.title, b.nickname, b.content, b.b_date, b.hits, b.type, b.realFileName, b.saveFileName, fileSize, ",
+			 "	(select count(*) from comment c where b.no = c.no and b.type = c.type) as commentCnt ",
+			 "from board b",
 			 "where nickname = #{nickname} ",
 			 "order by b_date desc",
 			 "</script>"})
