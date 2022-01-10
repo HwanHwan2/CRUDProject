@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dto.Board;
 import dto.User;
+import io.swagger.annotations.Api;
 import logic.BoardService;
 import logic.CipherUtil;
 import logic.UserService;
@@ -36,6 +37,7 @@ public class UserController {
 	private BoardService boardService;
 	@Autowired
 	private CipherUtil cipherUtil;
+	
 	
 	@GetMapping("/myinfo")
 	public ModelAndView myinfo(HttpSession session) {

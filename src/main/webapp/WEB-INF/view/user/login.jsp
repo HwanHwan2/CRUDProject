@@ -126,7 +126,6 @@
           		</div>
         	</div>
        		<div class="modal-footer">
-       			<button type = "button" class = "btn btn-primary" id = "bCheck">테스트</button>
        			<input type="submit" class="btn btn-success" id = "entryButton" value = "회원가입">
           		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         	</div>
@@ -136,13 +135,6 @@
   	</div>
   	
 <script>
-$("#bCheck").on("click",function(){
-	test();
-});
-	
-function test(){
-	alert("하이");
-}
 
 function entryCheck(){
 	var font1 = '<font color = "red">&nbsp;&nbsp;';
@@ -188,8 +180,10 @@ function entryIdNicknameCheck(){
 		success : function(data) {
 			if(data == 1) {
 				$("#errorId").html(font1 + "중복된 아이디입니다." + font2);
+				return false;
 			} else if(id == ""){
 				$("#errorId").html(font1 + "아이디를 입력해주세요." + font2);
+				return false;
 			} else $("#errorId").html("");
 		}, error : function(){}
 	});
@@ -201,8 +195,10 @@ function entryIdNicknameCheck(){
 		success : function(data){
 			if(data == 1) {
 				$("#errorNickname").html(font1 + "중복된 닉네임입니다." + font2);
+				return false;
 			} else if(nickname == ""){
 				$("#errorNickname").html(font1 + "닉네임을 입력해주세요." + font2);
+				return false;
 			} else $("#errorNickname").html("");
 		}, error : function(){}
 	});

@@ -11,8 +11,8 @@
 	.info_form{
 		margin-left:200px;
 		margin-right:200px;
-		height:700px;
 		position:relative;
+		height:auto;
 		top:100px;
 		padding:20px 20px 0;
 		border:1px solid #ebecef;
@@ -21,7 +21,7 @@
 	.info_title{
 		margin-bottom:20px;
 		border-bottom : 1px solid #eee;
-		height:13%;
+		height:10%;
 		font-size:30px;
 		text-align:left;
 	}
@@ -29,7 +29,6 @@
 		font-size:13px;
 	}
 	.info_content{
-		height:80%;
 		text-align:left;
 		font-size:25px;
 	}
@@ -106,9 +105,11 @@
 		</div>
 		<div class = "info_content">
 				${info.content}
+			<c:if test = "${info.realFileName != null}">
 			<div class = "content_files">
 				<font style = "font-size:15px;">첨부파일 [<a href = "download.do?type=${info.type}&no=${info.no}">${info.realFileName}</a>]</font>
 			</div>
+			</c:if>
 		</div>
 	</div>
 	
@@ -220,12 +221,43 @@
 		}
 		function commentCheck(){
 			var content = comment.input_comment.value;
-
+			var sentNickname = "${sessionScope.login.nickname}";
+			var recvNickname = "${info.nickname}";
+			var title = "님이 게시물에 댓글을 남겼습니다.";
+			var content = $("#input_comment").val();
+			var href = "${path}/board/info.do?type=${info.type}&no=${info.no}";
+			var today = new Date();
+			
+			var CommentParam = {
+					"sentNickname" : sentNickname,
+					"recvNickname" : recvNickname,
+					"title" : title,
+					"content" : content,
+					"href" : href,
+					"date" : today
+			}
+			
 			if(content == "") {
 				$("#errorInput").html("<font color = 'red'>내용을 입력해주세요.</font>");
 				return false;
-			} else return true;
+			} else {
+				$.ajax({
+					type : "POST",
+					url : "${path}/alarm/saveAlarm.do",
+					data : JSON.stringify(CommentParam),
+					contentType : 'application/json; charset = UTF-8',
+					async : false,
+					success : function(data) {
+						let Message = sentNickname + "," + recvNickname + "," + content + "," + today;
+						ws.send(Message);
+					} , error:function(error){
+						console.log(error);
+					}
+				})
+				return true;
+			}
 		}
 	</script>
+
 </body>
 </html>
