@@ -22,7 +22,7 @@ public class DBConfig {
 			ds.setDriverClass("org.mariadb.jdbc.Driver");
 			ds.setJdbcUrl("jdbc:mariadb://localhost:3306/crud");
 			ds.setUser("root");
-			ds.setPassword("1234");
+			ds.setPassword("c852323a");
 			ds.setMaxPoolSize(20);	//최대 커넥션 객체의 갯수
 			ds.setMinPoolSize(3);	//최소 커넥션 객체의 갯수
 			ds.setInitialPoolSize(5);	//초기 생성되는 커넥션 객체의 갯수 지정

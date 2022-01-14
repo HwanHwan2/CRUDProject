@@ -30,7 +30,12 @@
   		color:#636e72;
   		font-size:16px;
   		height:25px;
-  		background-color:#f1f1f1;
+	}
+	input[type=password] {
+		font-family:'Malgun gothic', dotum, sans-serif;
+	}
+	::placeholder{
+		font-family: 'OTWelcomeRA';
 	}
 </style>
 </head>

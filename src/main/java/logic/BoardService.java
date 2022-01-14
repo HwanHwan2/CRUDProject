@@ -44,6 +44,7 @@ public class BoardService {
 		return boardDao.comment(no,type);
 	}
 
+	//========== 게시물의 댓글 수 ================
 	public int commentCount(int no, int type) {
 		return boardDao.commentCount(no,type);
 	}
@@ -86,5 +87,6 @@ public class BoardService {
 	public List<Board> downloadFileName(int type, int no) {
 		return boardDao.downloadFileName(type,no);
 	}
+
 	
 }

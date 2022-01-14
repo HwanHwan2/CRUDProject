@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dto.Board;
 import dto.User;
-import io.swagger.annotations.Api;
 import logic.BoardService;
 import logic.CipherUtil;
 import logic.UserService;
@@ -50,13 +49,18 @@ public class UserController {
 		return mav;
 	}
 	
-	/*===================== 회원가입 POST ============================
-		BindingResult는 반드시 @ModelAttribute 뒤에 추가해야함.
-	*/
+	//===================== 회원가입 POST ============================
 	@PostMapping("/entry")
 	public ModelAndView entry(@ModelAttribute("user") User user) {
 		ModelAndView mav = new ModelAndView();
-		
+		if(user.getId() == "" || user.getPw() == "" || user.getName() == "" || 
+		   user.getNickname() == "" || user.getBirth() == null || user.getEmail() == "") {
+			mav.setViewName("alert");
+			mav.addObject("url", "login.do");
+			mav.addObject("msg", "잘못된 접근입니다.");
+			return mav;
+		}
+		System.out.println(user);
 		try {
 			user.setPw(cipherUtil.makehash(user.getPw()).substring(0, 20));
 			userService.entry(user);
@@ -72,10 +76,9 @@ public class UserController {
 		
 		return mav;
 	}
-	
+	//@ResponseBody - 응답을 클라이언트로 전송
 	//======================아이디,닉네임 체크==================================
 	//아이디 있으면 1, 없으면 0
-	//@ResponseBody - 응답을 클라이언트로 전송
 	@PostMapping("entryIdCheck")
 	@ResponseBody
 	public int entryIdCheck(@RequestParam("id") String id) {

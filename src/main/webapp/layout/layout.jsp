@@ -95,7 +95,7 @@ $("#alarmImg").attr("src", "../img/alarm.png?"+tmpDate.getTime());
 	</div>
 
 	
-	<div class="footer" style = "background-color : #d9edf7; margin-left: 300px; text-align:center; padding:5px;">
+	<div class="footer" style = "background-color : #d9edf7; margin-left: 300px; margin-top:100px; text-align:center; padding:5px;">
 			<h5>CRUD</h5>
 			<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 	</div>

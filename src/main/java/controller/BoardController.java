@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,7 +64,8 @@ public class BoardController {
 	      int endpage = startpage + 9;
 	      if(endpage > maxpage)
 	         endpage = maxpage;
-	      int boardno = listcount - (pageNum - 1) * limit +1;   //화면에 표시될 게시물 번호. 의미 없음x   
+	      int boardno = listcount - (pageNum - 1) * limit +1;   //화면에 표시될 게시물 번호. 의미 없음   
+	      
 	      mav.addObject("pageNum",pageNum);
 	      mav.addObject("boardno",boardno);
 	      mav.addObject("maxpage",maxpage);
@@ -112,8 +112,14 @@ public class BoardController {
 		}
 		
 		try {
-			int maxNo = boardService.getNo(); // 게시글 번호 가져오기.
-			++maxNo;
+			int maxNo;
+			int boardCount = boardService.listcount(null, null);
+			if(boardCount == 0) {
+				maxNo = 1;
+			} else {
+				maxNo = boardService.getNo(); // 게시글 번호 가져오기.
+				maxNo++;
+			}
 			board.setNo(maxNo);			
 			boardService.write(board);
 			mav.setViewName("alert");
@@ -222,7 +228,8 @@ public class BoardController {
 	public ModelAndView commentWrite(Comment comment) {
 		ModelAndView mav = new ModelAndView();
 		
-		int commentCount = boardService.commentCount(comment.getNo(), comment.getType()); //댓글 있는지 없는지
+		//댓글 수 카운트하기.
+		int commentCount = boardService.commentCount(comment.getNo(), comment.getType());
 		try {
 			//댓글이 없는 경우
 			if(commentCount == 0) {

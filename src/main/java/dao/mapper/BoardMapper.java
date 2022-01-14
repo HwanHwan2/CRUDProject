@@ -91,7 +91,7 @@ public interface BoardMapper {
 
 	@Insert({"<script>",
 			 "insert into comment ",
-			 "values (#{no}, #{c_no}, #{type}, #{nickname}, #{content}, NOW())",
+			 "values (#{no}, #{type}, #{c_no}, #{nickname}, #{content}, NOW())",
 			 "</script>"})
 	void commentWrite(Map<String, Object> param);
 
@@ -116,4 +116,5 @@ public interface BoardMapper {
 			 "where type = #{type} and no = #{no}",
 			 "</script>"})	
 	List<Board> downloadFileName(Map<String, Object> param);
+
 }

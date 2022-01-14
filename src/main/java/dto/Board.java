@@ -2,8 +2,6 @@ package dto;
 
 import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Board {
 	private int no;
 	private String nickname;

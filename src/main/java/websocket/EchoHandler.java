@@ -42,7 +42,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		if(!StringUtils.isEmpty(msg)) { //msg 값이 !Empty인 경우
 			String strs[] = msg.split(",");
 			if(strs != null && strs.length == 4) { //쪽지 보낼 때 알람.
-				String sentid = strs[0]; 
+				String sentid = strs[0];
 				String recvid = strs[1]; 
 				String content = strs[2];
 				String today = strs[3];

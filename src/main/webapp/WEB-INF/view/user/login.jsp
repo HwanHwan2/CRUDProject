@@ -64,7 +64,7 @@
 				<font style = "font-size:35px;">로</font>그인
 			</h3>
 		</div>
-		<form:form modelAttribute = "user" method = "post" name = "login" action = "login.do" onsubmit = "return LoginCheck();">
+		<form:form modelAttribute = "user" method = "post" name = "login" action = "login.do">
 			<spring:hasBindErrors name = "user">
 				<font color = "red">
 					<c:forEach items = "${errors.globalErrors}" var = "error">
@@ -78,7 +78,6 @@
 			<div class = "pw_form">
 				<form:input path = "pw" class = "pw" type = "password" placeholder = "PW"/> 
 			</div>
-			
 			<button type = "submit" class = "btn btn-primary" style = "width:85%">로그인</button>
 		</form:form>
 		<a href = "idsearch.do">아이디찾기</a> | 
@@ -114,7 +113,7 @@
           		</div>
           		<div class = "form-group">
           			<label for = "nickname">닉네임</label><label id = "errorNickname">&nbsp;&nbsp;</label>
-          			<form:input path = "nickname" id = "entryNickname" class = "form-control" placeholder = "미입력 시 이름으로 대체됩니다."/>
+          			<form:input path = "nickname" id = "entryNickname" class = "form-control"/>
           		</div>
           		<div class = "form-group">
           			<label for = "birth">생년월일</label><label id = "errorBirth">&nbsp;&nbsp;</label>
@@ -149,22 +148,30 @@ function entryCheck(){
 		alert("입력 정보에 문제가 있습니다.");
 	}
 	
+	check = 0;
 	entryIdNicknameCheck();
 	if(pw == ""){
 		$("#errorPw").html(font1 + "비밀번호를 입력해주세요." + font2);
+		check++;
 	} else $("#errorPw").html("");
 	if(name == ""){
 		$("#errorName").html(font1 + "이름을 입력해주세요." + font2);
+		check++;
 	} else $("#errorName").html("");
 	if(birth == ""){
 		$("#errorBirth").html(font1 + "생년월일을 입력해주세요." + font2);
+		check++;
 	} else $("#errorBirth").html("");
 	if(email == ""){
 		$("#errorEmail").html(font1 + "이메일을 입력해주세요." + font2);
-		return false;
+		check++;
 	} else $("#errorEmail").html("");
 	
-	
+	if(check > 0) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 function entryIdNicknameCheck(){
@@ -195,6 +202,7 @@ function entryIdNicknameCheck(){
 		success : function(data){
 			if(data == 1) {
 				$("#errorNickname").html(font1 + "중복된 닉네임입니다." + font2);
+				alert("중복");
 				return false;
 			} else if(nickname == ""){
 				$("#errorNickname").html(font1 + "닉네임을 입력해주세요." + font2);

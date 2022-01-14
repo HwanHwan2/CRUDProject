@@ -52,7 +52,7 @@
 							<b>(${board.commentCnt})</b> 
 						</c:if>
 						<c:if test = "${board.realFileName != null}">
-							<span class="glyphicon glyphicon-paperclip" aria-hidden="true" style = "width:15px; height:15px;"></span>
+							<span class="glyphicon glyphicon-paperclip" aria-hidden="t_rue" style = "width:15px; height:15px;"></span>
 						</c:if>
 					</td>
 					<td>${board.nickname}</td>
@@ -69,34 +69,45 @@
 				</tr>
 			</c:forEach>
 		</table>
-		
 	</div>
 	
 	<div class = "pageSearch">
 		<ul class="pagination justify-content-center" style="margin-left:40%;">
-          <li><a href="javascript:listdo(${startpage})"><<</a></li>
-        <c:if test="${pageNum <=1}">
-           <li><a href="javascript:listdo(${pageNum+1})"><</a></li>
-        </c:if>
-        <c:if test="${pageNum > 1}">
+			<!-- << -->
+         	<li><a href="javascript:listdo(${startpage})"><<</a></li>
+         	
+         	<!-- < -->
+        		<c:if test="${pageNum <=1}">
            <li><a href="javascript:listdo(${pageNum})"><</a></li>
-         </c:if>
-      
-        <c:forEach var="a" begin="${startpage}" end="${endpage}">
+        		</c:if>
+        		
+        		<c:if test="${pageNum > 1}">
+           <li><a href="javascript:listdo(${pageNum-1})"><</a></li>
+         		</c:if>
+         		
+      		<!-- 숫자 -->
+        		<c:forEach var="a" begin="${startpage}" end="${endpage}">
             <li><a href="javascript:listdo(${a})">${a}</a></li>
-         </c:forEach>
+        		</c:forEach>
            
-        <c:if test="${pageNum >= maxpage}">   
-           <li><a href="javascript:listdo(${pageNum+1})">></a></li>
-        </c:if>
-        <c:if test="${pageNum < maxpage}">
-            <li><a href="javascript:listdo(${pageNum+2})">></a></li>
-        </c:if>
-        <li><a href="javascript:listdo(${endpage+1})">>></a></li>
-    	</ul><hr style="margin-top: 5px;margin-bottom: 15px">
+           	<!-- > -->
+        		<c:if test="${pageNum < maxpage}">
+           	<li><a href="javascript:listdo(${pageNum+1})">></a></li>
+        		</c:if>
+        		
+        		<c:if test="${pageNum >= maxpage}">
+            <li><a href="javascript:listdo(${endpage})">></a></li>
+        		</c:if>
+        		
+        	<!-- >> -->
+        	<li><a href="javascript:listdo(${endpage})">>></a></li>
+        	
+    	</ul>
+    	<hr style="margin-top: 5px;margin-bottom: 15px">
 	</div>
 	
 	<form action="list.do" method="post" name="searchform" class="form-inline" id = "search">
+		<input type = "hidden" name = "pageNum" value = "1">
       	<select class="form-control" aria-label = "Default select example" name="searchtype" style="width:100px; font-family:emoji;">
       		<option value = "">선택</option>
       		<option value="title">제목</option>

@@ -153,6 +153,6 @@ public class BoardDao {
 		param.put("no",no);
 		return template.getMapper(BoardMapper.class).downloadFileName(param);
 	}
-	
+
 	
 }
