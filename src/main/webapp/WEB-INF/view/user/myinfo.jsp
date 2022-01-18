@@ -42,24 +42,12 @@
 		</div>
 		<div class = "info1"> <!-- 내 정보 -->
 			<table class = "table">
-				<tr>
-					<td style = "width:20%;height:15%;">아이디</td><td>${sessionScope.login.id}</td>	
-				</tr>
-				<tr>
-					<td>비밀번호</td><td><a data-toggle = "modal" href = "#changePwModal"><u>비밀번호변경</u></a>
-				</tr>
-				<tr>
-					<td>닉네임</td><td>${sessionScope.login.nickname}</td>
-				</tr>
-				<tr>
-					<td>이름</td><td>${sessionScope.login.name}</td>
-				</tr>
-				<tr>
-					<td>생년월일</td><td>${sessionScope.login.birth}</td>
-				</tr>
-				<tr>
-					<td>이메일</td><td>${sessionScope.login.email}</td>
-				</tr>
+				<tr><td style = "width:20%;height:15%;">아이디</td><td>${sessionScope.login.id}</td>	</tr>
+				<tr><td>비밀번호</td><td><a data-toggle = "modal" href = "#changePwModal"><u>비밀번호변경</u></a></tr>
+				<tr><td>닉네임</td><td>${sessionScope.login.nickname}</td></tr>
+				<tr><td>이름</td><td>${sessionScope.login.name}</td></tr>
+				<tr><td>생년월일</td><td>${sessionScope.login.birth}</td></tr>
+				<tr><td>이메일</td><td>${sessionScope.login.email}</td></tr>
 			</table>
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dropModal">회원탈퇴</button>
 		</div>
@@ -138,7 +126,7 @@
           		
         	</div>
        		<div class="modal-footer">
-       			<input type="submit" class="btn btn-success" id = "entryButton" value = "회원가입">
+       			<input type="submit" class="btn btn-success" id = "dropButton" value = "회원탈퇴">
           		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         	</div>
       	</div>
@@ -146,7 +134,7 @@
     	</div>
   	</div>
   	
-  	<!-- 회원탈퇴 Modal -->
+  	<!-- 비밀번호변경 Modal -->
 	<div class="modal fade" id="changePwModal" role="dialog">
     	<div class="modal-dialog">
     
@@ -229,7 +217,6 @@
 					type : 'post',
 					async : false,
 					success : function(data){
-						alert(data);
 						if(data == 1) {
 							resultFlag = true;
 						} else if(data == 0){

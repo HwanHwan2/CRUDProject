@@ -10,9 +10,9 @@
 	.write_form{
 		margin-left:200px;
 		margin-right:200px;
-		height:700px;
 		position:relative;
 		top:100px;
+		padding-bottom: 10px;
 	}
 	.write_header{
 		margin-bottom:20px;
@@ -59,6 +59,7 @@
 			<div class = "content_form">
 				<form:textarea path="content" class = "form-control" id = "input_content" placeholder = "내용을 입력해주세요." row="15" cols="80"/>
 			</div>
+			첨부파일 <input type = "file" name = "files" id = "files" onchange = "file();">
 		</form:form>
 	</div>
 	
@@ -72,6 +73,12 @@
 		.catch(error =>{
 			console.error(error);
 		});
+</script>
+<script>
+	function file(){
+		var realFileName = ${info.realFileName};
+		document.getElementById('files').value = realFileName;
+	}
 </script>
 </body>
 </html>

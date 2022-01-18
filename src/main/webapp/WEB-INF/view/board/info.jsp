@@ -112,9 +112,7 @@
 			</c:if>
 		</div>
 	</div>
-	
 	<span class = "comment_count"><b>댓글 ${commentCount}</b></span>
-	
 	<div class = "comment_form">
 		<div class = "input_comment">
 			<span class = "input1">
@@ -135,7 +133,6 @@
 				</form:form>
 			</span>
 		</div>
-		
 		<c:forEach var = "comment" items = "${comment}">
 			<c:set var = "c_no" value = "${comment.c_no }"/> <!-- ajax에 사용될 commentNo -->
 			<div class = "comment_content" id = "comment${c_no}">
@@ -154,7 +151,6 @@
 					</span>
 					<c:if test = "${sessionScope.login.nickname == comment.nickname}">
 						&nbsp;<a href = "#" onclick = "commentDelete(${c_no});"><u>삭제</u></a>
-						&nbsp;<a href = "#" onclick = "commentUpdate();"><u>수정</u></a>
 					</c:if>
 				</div>
 				

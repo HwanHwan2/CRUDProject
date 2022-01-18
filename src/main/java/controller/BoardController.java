@@ -241,7 +241,7 @@ public class BoardController {
 			}
 			boardService.commentWrite(comment);
 			mav.setViewName("alert");
-			mav.addObject("msg","등록 성공");
+			mav.addObject("msg","댓글을 작성했습니다.");
 			mav.addObject("url","info.do?type="+comment.getType()+"&no="+comment.getNo());
 			return mav;
 		} catch (Exception e) {

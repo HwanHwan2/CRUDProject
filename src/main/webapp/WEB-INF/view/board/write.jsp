@@ -10,9 +10,9 @@
 	.write_form{
 		margin-left:200px;
 		margin-right:200px;
-		height:700px;
 		position:relative;
 		top:100px;
+		padding-bottom: 10px;
 	}
 	.write_header{
 		margin-bottom:20px;
@@ -69,7 +69,6 @@
 		.catch(error =>{
 			console.error(error);
 		});
-	
 </script>
 </body>
 </html>
