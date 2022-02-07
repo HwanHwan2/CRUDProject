@@ -17,6 +17,7 @@ Info
 - 제작기간 : 2021/10 ~ 2021/12   
 ##### 기술 스택   
 - Tool : Eclipse, MariaDB   
+- Server : Apache Tomcat 9.0   
 - Front-End : HTML, CSS, Javascript, JSP, XML, JQuery, Ajax, JSON   
 - Back-End : Java, SQL   
 - Framework : Spring, MyBatis, WebSocket   
