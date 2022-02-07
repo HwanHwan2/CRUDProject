@@ -11,19 +11,22 @@ Info
 ==============
 - 프로젝트 주소 : https://github.com/HwanHwan2/CRUDProject/   
 - 와이어툴(화면 구성) : https://whimsical.com/crud-XPPwE7dBqSWbKD5s56CuoY   
+- 포트폴리오 : https://www.slideshare.net/secret/FEzsBu0tBOjk71   
 
 - 제작기간 : 2021/10 ~ 2021/12   
 ##### 기술 스택   
 - Tool : Eclipse, MariaDB   
 - Front-End : HTML, CSS, Javascript, JSP, XML, JQuery, Ajax, JSON   
 - Back-End : Java, SQL   
-- Framework : Spring, MyBatis   
+- Framework : Spring, MyBatis, WebSocket   
 
 ##### 주요 기능
 - User : 회원가입, 로그인, 로그아웃, 아이디/비밀번호찾기, 비밀번호변경, 회원탈퇴   
 - Board : 게시판 리스트 조회, 게시물 상세보기, 게시물(+첨부파일) 작성/, 게시물 수정/삭제   
+- Note : 쪽지기능, 쪽지 조회/전송/삭제
+- 알림 : WebSocket 활용한 알람 기능, 게시물 댓글 작성 시, 쪽지 전송 시
 
-## **프로젝트 기획서**   
+## **화면 구성**   
 https://whimsical.com/crud-XPPwE7dBqSWbKD5s56CuoY@3CRerdhrAw8kHgqaw9sPj7xQ   
 ![와이어툴](https://user-images.githubusercontent.com/82797084/147442466-87e71117-580c-4a31-bf33-060a48ca6438.PNG)
 
