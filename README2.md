@@ -1,5 +1,6 @@
 CRUD 프로젝트
 ==============
+
 웹프로그래밍의 기본인 CRUD 기능을 구현하는 프로젝트를 제작했습니다.   
 
 완성을 목표로 하는 것이 아닌 웹프로그래밍에 관한 기술을 하나하나씩 공부하며 부족했던 웹프로그래밍에 필요한 역량을 강화하고   
@@ -31,4 +32,16 @@ https://whimsical.com/crud-XPPwE7dBqSWbKD5s56CuoY@3CRerdhrAw8kHgqaw9sPj7xQ
 ![와이어툴](https://user-images.githubusercontent.com/82797084/147442466-87e71117-580c-4a31-bf33-060a48ca6438.PNG)
 
 ## **DB/API 설계**   
-![ER](https://user-images.githubusercontent.com/82797084/147442536-4743377f-0601-4d42-a083-afdd1daf3667.png)
+![ER](https://user-images.githubusercontent.com/82797084/147442536-4743377f-0601-4d42-a083-afdd1daf3667.png)   
+
+## **프로젝트 구성**   
+- src/main/java
+![controller](https://user-images.githubusercontent.com/82797084/152726899-b1db7eb3-1f88-4c20-aff9-7c075366041a.PNG)   
+
+- src/main/resources
+![resource](https://user-images.githubusercontent.com/82797084/152726921-ea016b7d-1105-4800-a155-2744bc64837d.PNG)
+
+- View
+![src view](https://user-images.githubusercontent.com/82797084/152726939-6402ff2b-1926-4284-9076-72b0f9ee6969.PNG)
+
+
