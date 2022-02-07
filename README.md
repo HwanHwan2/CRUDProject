@@ -25,7 +25,7 @@ Info
 ##### 주요 기능
 - User : 회원가입, 로그인, 로그아웃, 아이디/비밀번호찾기, 비밀번호변경, 회원탈퇴   
 - Board : 게시판 리스트 조회, 게시물 상세보기, 게시물(+첨부파일) 작성/, 게시물 수정/삭제   
-- 알림 : WebSocket 활용한 알람 기능, 게시물 댓글 작성 시, 쪽지 전송 시
+- 알림 : WebSocket 활용한 알람 기능
 
 ## **화면 구성**   
 https://whimsical.com/crud-XPPwE7dBqSWbKD5s56CuoY@3CRerdhrAw8kHgqaw9sPj7xQ   
