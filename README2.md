@@ -35,13 +35,13 @@ https://whimsical.com/crud-XPPwE7dBqSWbKD5s56CuoY@3CRerdhrAw8kHgqaw9sPj7xQ
 ![ER](https://user-images.githubusercontent.com/82797084/147442536-4743377f-0601-4d42-a083-afdd1daf3667.png)   
 
 ## **프로젝트 구성**   
-- src/main/java
+- src/main/java   
 ![controller](https://user-images.githubusercontent.com/82797084/152726899-b1db7eb3-1f88-4c20-aff9-7c075366041a.PNG)   
 
-- src/main/resources
+- src/main/resources   
 ![resource](https://user-images.githubusercontent.com/82797084/152726921-ea016b7d-1105-4800-a155-2744bc64837d.PNG)
 
-- View
+- View   
 ![src view](https://user-images.githubusercontent.com/82797084/152726939-6402ff2b-1926-4284-9076-72b0f9ee6969.PNG)
 
 
